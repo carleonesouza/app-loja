@@ -5,26 +5,27 @@
         "description": "Essa é a API de Controle de Caixa, que pode ser utilizada junto com a aplicação para controle de caixa de pequenos négocios",
         "termsOfService": "http://example.com/terms/",
         "contact": {
-          "name": "Suporte da API",
-          "url": "http://www.example.com/support",
-          "email": "carleonepsouza@gmail.com"
+            "name": "Suporte da API",
+            "url": "http://www.example.com/support",
+            "email": "carleonepsouza@gmail.com"
         },
         "license": {
-          "name": "Apache 2.0",
-          "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
         },
         "version": "1.0.0"
-      },
-      "servers":[
-           { "url": "http://localhost:4000/v1/api"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000/v1/api"
         }
-      ],
+    ],
     "host": "controlecaixa.swagger.io",
     "basePath": "/v1",
     "tags": [
         {
-            "name": "controledecaixa",
-            "description": "Tudo para ajudar a você",
+            "name": "controle de caixa",
+            "description": "Rotas API gestão controle de caixa",
             "externalDocs": {
                 "description": "Operações de controle de caixa",
                 "url": "http://swagger.io"
@@ -32,15 +33,15 @@
         },
         {
             "name": "loja",
-            "description": "Acessar controle de caixa",
+            "description": "Rotas API gestão da loja",
             "externalDocs": {
-              "description": "Operações da loja",
-              "url": "http://swagger.io"
-          }
+                "description": "Operações da loja",
+                "url": "http://swagger.io"
+            }
         },
         {
             "name": "usuario",
-            "description": "Descubra mais sobre acessando",
+            "description": "Rotas API gestão de usuários",
             "externalDocs": {
                 "description": "Operações do usuários",
                 "url": "http://swagger.io"
@@ -50,114 +51,355 @@
     "schemes": [
         "https",
         "http"
-    ], 
+    ],
     "paths": {
-      "/products": {
-        "post": {
-            "tags": [
-                "loja"
-            ],
-            "summary": "cadastra um produto novo",
-            "description": "Essa rota será responsável por cadastrar um novo produto",
-            "security": [{"bearerAuth":[]}],
-            "requestBody": {
-                "content":{
-                    "application/json": {
-                        "schema":{
-                            "$ref": "#/components/schemas/Product"
-                        },
-                        "examples":{
-                            "product": {
-                                "value":{
-                                    "name":"Cerveja Lata",
-                                    "category":"Bebidas",
-                                    "quantity":50,
-                                    "classification": "ML",
-                                    "volume": 300,
-                                    "description": "Cerveja Heineken",
-                                    "value": 10.50
+        "/products": {
+            "post": {
+                "tags": [
+                    "loja"
+                ],
+                "summary": "cadastra um produto novo",
+                "description": "Essa rota será responsável por cadastrar um novo produto",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "name": "Cerveja Devassa",
+                                        "description": "Ceverja Lata",
+                                        "price": 8,
+                                        "classification": "ML",
+                                        "category": "6408c5fca1bb1f33b014dee2",
+                                        "volume": "350",
+                                        "quantity": 100,
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Sem Autorização para acesso!"
+                    },
+                    "400": {
+                        "description": "Produto já existe!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
                                 }
                             }
                         }
                     }
                 }
             },
-            "responses":{
-                "401":{
-                    "description": "Sem Autorização para acesso!"
+            "get": {
+                "tags": [
+                    "loja"
+                ],
+                "summary": "Devolve uma lista de produtos",
+                "description": "Essa rota será responsável devolver uma lista de produtos",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type":"array",
+                                "items":{
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                                
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": [
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                            "name": "Cerveja Devassa",
+                                            "description": "Ceverja Lata",
+                                            "price": 8,
+                                            "classification": "ML",
+                                            "category": "6408c5fca1bb1f33b014dee2",
+                                            "volume": "350",
+                                            "quantity": 100,
+                                            "status": true,
+                                            "__v": 0
+                                        },
+                                        {
+                                            "_id": "6408dd63b76bc4618c8c09fc",
+                                            "name": "Cerveja Heineken",
+                                            "description": "Ceverja Lata",
+                                            "price": 10,
+                                            "classification": "ML",
+                                            "category": "6408c5fca1bb1f33b014dee2",
+                                            "volume": "350",
+                                            "quantity": 100,
+                                            "status": true,
+                                            "__v": 0
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
                 },
-                "400": {
-                    "description":"Produto já existe!"
-                },
-                "200":{
-                    "description": "OK",
-                    "content":{
-                        "application/json":{
-                            "schema":{
-                                "type":"object",
-                                "$ref":"#/components/schemas/Product"
+                "responses": {
+                    "401": {
+                        "description": "Sem Autorização para acesso!"
+                    },
+                    "404": {
+                        "description": "Não Encontrado!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
                             }
                         }
                     }
                 }
-    
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "loja"
+                ],
+                "parameters": {
+                    "name": "id",
+                    "in": "query",
+                    "description": "ID do produto",
+                    "required": true
+                },
+                "summary": "Devolve um produto específico",
+                "description": "Essa rota será responsável por devolver um produto pelo seu ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "name": "Cerveja Devassa",
+                                        "description": "Ceverja Lata",
+                                        "price": 8,
+                                        "classification": "ML",
+                                        "category": "6408c5fca1bb1f33b014dee2",
+                                        "volume": "350",
+                                        "quantity": 100,
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Sem Autorização para acesso!"
+                    },
+                    "404": {
+                        "description": "Não Encontrado!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "tags": [
+                    "loja"
+                ],
+                "parameters": [
+                    {
+                      "name": "id",
+                      "in": "query",
+                      "description": "ID do produto",
+                      "required": true,
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  ],
+                "summary": "Atualiza um produto específico",
+                "description": "Essa rota será responsável por atualizar um produto pelo seu ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "name": "Cerveja Devassa",
+                                        "description": "Ceverja Lata",
+                                        "price": 8,
+                                        "classification": "ML",
+                                        "category": "6408c5fca1bb1f33b014dee2",
+                                        "volume": "350",
+                                        "quantity": 100,
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Sem Autorização para acesso!"
+                    },
+                    "404": {
+                        "description": "Não Encontrado!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+
+            },
+            "delete":{
+                "tags": [
+                    "loja"
+                ],
+                "parameters": [
+                    {
+                      "name": "id",
+                      "in": "query",
+                      "description": "ID do produto",
+                      "required": true,
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  ],
+                "summary": "Delata um produto específico",
+                "description": "Essa rota será responsável por deletar um produto pelo seu ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+               
+                "responses": {
+                    "401": {
+                        "description": "Sem Autorização para acesso!"
+                    },
+                    "404": {
+                        "description": "Não Encontrado!"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
             }
         }
-    }
-  },
-  "components":{
-    "schemas":{
-        "Product": {
-            "type": "object",
-            "properties":{
-                "name": {
-                    "type": "string"
-                },
-                "category": {
-                    "$ref": "#/components/schemas/Category"
-                },
-                "quantity": {
-                    "type":"number"
-                },
-                "value":{
-                    "type":"number"
-                },
-                "classification": {
-                    "type":"string"
-                },
-                "description": {
-                    "type":"string"
-                },
-                "id": {
-                    "type":"string"
-                },
-                "volume":{
-                    "type": "number"
+    },
+    "components": {
+        "schemas": {
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/Category"
+                    },
+                    "quantity": {
+                        "type": "number"
+                    },
+                    "value": {
+                        "type": "number"
+                    },
+                    "classification": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "volume": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Category": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
                 }
             }
         },
-        "Category":{
-            "type": "object",
-            "properties":{
-                "name": {
-                    "type":"string"
-                },
-                "description": {
-                    "type":"string"
-                },
-                "status": {
-                    "type":"boolean"
-                }
-
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "Bearer",
+                "bearerFormat": "JWT"
             }
         }
-    }, 
-    "securitySchemes":{
-        "bearerAuth":{
-            "type": "http",
-            "scheme": "Bearer",
-            "bearerFormat": "JWT"
-        }
     }
-  }
 }
