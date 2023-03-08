@@ -11,7 +11,7 @@ export class ProductController extends ProductMongoDbRepository {
 
     try {
       const products = await this.find({});
-      res.status(201).send({ message: "The product has been successfully updated!", products });
+      res.status(201).send(products);
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
