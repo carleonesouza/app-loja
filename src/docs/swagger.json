@@ -1,0 +1,163 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Amostra da API Controle de Caixa",
+        "description": "Essa é a API de Controle de Caixa, que pode ser utilizada junto com a aplicação para controle de caixa de pequenos négocios",
+        "termsOfService": "http://example.com/terms/",
+        "contact": {
+          "name": "Suporte da API",
+          "url": "http://www.example.com/support",
+          "email": "carleonepsouza@gmail.com"
+        },
+        "license": {
+          "name": "Apache 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+      },
+      "servers":[
+           { "url": "http://localhost:4000/v1/api"
+        }
+      ],
+    "host": "controlecaixa.swagger.io",
+    "basePath": "/v1",
+    "tags": [
+        {
+            "name": "controledecaixa",
+            "description": "Tudo para ajudar a você",
+            "externalDocs": {
+                "description": "Operações de controle de caixa",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "loja",
+            "description": "Acessar controle de caixa",
+            "externalDocs": {
+              "description": "Operações da loja",
+              "url": "http://swagger.io"
+          }
+        },
+        {
+            "name": "usuario",
+            "description": "Descubra mais sobre acessando",
+            "externalDocs": {
+                "description": "Operações do usuários",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "schemes": [
+        "https",
+        "http"
+    ], 
+    "paths": {
+      "/products": {
+        "post": {
+            "tags": [
+                "loja"
+            ],
+            "summary": "cadastra um produto novo",
+            "description": "Essa rota será responsável por cadastrar um novo produto",
+            "security": [{"bearerAuth":[]}],
+            "requestBody": {
+                "content":{
+                    "application/json": {
+                        "schema":{
+                            "$ref": "#/components/schemas/Product"
+                        },
+                        "examples":{
+                            "product": {
+                                "value":{
+                                    "name":"Cerveja Lata",
+                                    "category":"Bebidas",
+                                    "quantity":50,
+                                    "classification": "ML",
+                                    "volume": 300,
+                                    "description": "Cerveja Heineken",
+                                    "value": 10.50
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "401":{
+                    "description": "Sem Autorização para acesso!"
+                },
+                "400": {
+                    "description":"Produto já existe!"
+                },
+                "200":{
+                    "description": "OK",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "$ref":"#/components/schemas/Product"
+                            }
+                        }
+                    }
+                }
+    
+            }
+        }
+    }
+  },
+  "components":{
+    "schemas":{
+        "Product": {
+            "type": "object",
+            "properties":{
+                "name": {
+                    "type": "string"
+                },
+                "category": {
+                    "$ref": "#/components/schemas/Category"
+                },
+                "quantity": {
+                    "type":"number"
+                },
+                "value":{
+                    "type":"number"
+                },
+                "classification": {
+                    "type":"string"
+                },
+                "description": {
+                    "type":"string"
+                },
+                "id": {
+                    "type":"string"
+                },
+                "volume":{
+                    "type": "number"
+                }
+            }
+        },
+        "Category":{
+            "type": "object",
+            "properties":{
+                "name": {
+                    "type":"string"
+                },
+                "description": {
+                    "type":"string"
+                },
+                "status": {
+                    "type":"boolean"
+                }
+
+            }
+        }
+    }, 
+    "securitySchemes":{
+        "bearerAuth":{
+            "type": "http",
+            "scheme": "Bearer",
+            "bearerFormat": "JWT"
+        }
+    }
+  }
+}
