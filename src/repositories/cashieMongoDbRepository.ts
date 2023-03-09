@@ -15,7 +15,10 @@ export class CashieMongoDbRepository extends DbMongooseRepository<Cashie> implem
 
     public async findAllCashie(): Promise<Cashie[]> {
         try {
-            const cashies = await this.cashieModel.find().populate('user').populate('sale');
+            const cashies = await this.cashieModel.find()
+            .populate('user')
+            .populate('orders')
+            .exec();
             return cashies ;
         } catch (error) {
             logger.error(error);
@@ -26,7 +29,10 @@ export class CashieMongoDbRepository extends DbMongooseRepository<Cashie> implem
 
     public async findCashieById(cashieId: string): Promise<Cashie> {
         try {
-            const data = await this.cashieModel.findOne({ _id: cashieId }).populate('user').populate('sale');
+            const data = await this.cashieModel.findOne({ _id: cashieId })
+            .populate('user')
+            .populate('orders')
+            .exec();
             return data as Cashie;
         } catch (error) {
             logger.error(error);

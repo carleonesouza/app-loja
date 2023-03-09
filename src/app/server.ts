@@ -16,7 +16,8 @@ import morgan = require("morgan");
 import logger from "@src/logger";
 import { UserController } from '@src/controllers/user';
 import { ProfileController } from '@src/controllers/profile';
-import { SaleController } from '../controllers/sale';
+import { OrderController } from '../controllers/order';
+import { CashieController } from '../controllers/cashie';
 
 /**
  * Configuração do express via Overnight
@@ -64,10 +65,11 @@ export class SetupServer extends Server {
     const categoryController = new CategoryController();
     const userController = new UserController();
     const profileController = new ProfileController();
-    const saleController = new SaleController();
+    const orderController = new OrderController();
+    const cashieController = new CashieController();
     this.addControllers([productController, categoryController,
                          userController, profileController,
-                        saleController]);
+                         orderController, cashieController]);
   }
 
   private setupHeader(): void {

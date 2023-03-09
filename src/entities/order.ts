@@ -1,7 +1,7 @@
 import { Product } from "@src/models/product";
 import { User } from "@src/models/user";
 
-export interface ISale {
+export interface IOrder {
   id?: string;
   product: Product;
   quantity: number;
