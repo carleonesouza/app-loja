@@ -63,6 +63,43 @@ export class UserController extends UserMongoDbRepository{
     }
   }
 
+  @Post()
+  public async registerUser(req: Request, res: Response): Promise<void>{
+    try {
+      const existUser = this.findUserByEmail(req.body.email);
+      if (await existUser) {
+        res.status(409).send({ message: 'User Already exists!' });
+      } else {
+        const user = new User(req.body);
+        const token = this.register(user);
+        res.status(201).send({accessToken: token});
+      }
+
+    } catch (error) {
+      res.status(500).send(error);
+      logger.error(error);
+    }
+  }
+
+  @Get()
+  public async loginUser(req: Request, res: Response): Promise<void>{
+    try {
+      const existUser = this.findUserByEmail(req.body.email);
+      if (!existUser) {
+        res.status(404).send({ message: 'User not exists!' });
+      } else {
+  
+        const token = this.login(req.params.email, req.params.password);
+
+        res.status(200).send({accessToken: token});
+      }
+
+    } catch (error) {
+      res.status(500).send(error);
+      logger.error(error);
+    }
+  }
+
   @Delete(":id")
   private async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id })

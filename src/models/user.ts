@@ -11,16 +11,18 @@ const userSchema = new mongoose.Schema(
         email: { type: String, required: true, unique: true },
         phone: { type: Number, required: true },
         cpfCnpj: { type: Number, required: true, unique: true },
+        password: { type: String, required: true },
+        apiKey: { type: String },
         address: new mongoose.Schema(
             {
-                street: { type: String, required: true },
-                neighborhood: { type: String, required: true },
-                zipCode: { type: Number, required: true },
-                status: { type: Boolean, required: false },
+                street: { type: String},
+                neighborhood: { type: String },
+                zipCode: { type: Number},
+                status: { type: Boolean},
             }
         ),
-        profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile", required: true },
-        status: { type: Boolean, required: false },
+        profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile"},
+        status: { type: Boolean},
     },
     {
         timestamps: true

@@ -24,14 +24,6 @@
     "basePath": "/v1",
     "tags": [
         {
-            "name": "access",
-            "description": "Access to the API routes",
-            "externalDocs": {
-                "description": "API management",
-                "url": "http://swagger.io"
-            }
-        },
-        {
             "name": "orders",
             "description": "Orders management API routes",
             "externalDocs": {
@@ -652,6 +644,8 @@
                                         "email": "jhonhdoe@test.com",
                                         "phone": 5531999999999,
                                         "cpfCnpj": 11111111100,
+                                        "apiKey": "6408c5fca1bb1f33b014dee2",
+                                        "password": "122356d",
                                         "address": {
                                             "street": "Rua XXX",
                                             "neighborhood": "Bairro ZZZ",
@@ -1652,7 +1646,7 @@
         "/register": {
             "post": {
                 "tags": [
-                    "access"
+                    "users"
                 ],
                 "summary": "Sign up user to API",
                 "description": "This route will be responsible to the user sign up to API",
@@ -1663,7 +1657,7 @@
                       "description": "Created user object",
                       "required": true,
                       "schema": {
-                        "$ref": "#/components/schemas/ApiUser"
+                        "$ref": "#/components/schemas/User"
                       }
                     }
                   ],
@@ -1671,17 +1665,24 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ApiUser"
+                                "$ref": "#/components/schemas/User"
                             },
                             "examples": {
                                 "user": {
                                     "value": {
-                                        "usaname": "Joao Garcia",
-                                        "email": "joao@test.com.br",
-                                        "phone": 55319999999999,
-                                        "cpfCnpj": 11115236555,
+                                        "fullName": "Jhon Doe",
+                                        "email": "jhonhdoe@test.com",
+                                        "phone": 5531999999999,
+                                        "cpfCnpj": 11111111100,
                                         "apiKey": "6408c5fca1bb1f33b014dee2",
                                         "password": "122356d",
+                                        "address": {
+                                            "street": "Rua XXX",
+                                            "neighborhood": "Bairro ZZZ",
+                                            "zipCode": "0000",
+                                            "status": true
+                                        },
+                                        "profile": "6409fedafffd6f3b2a321361",
                                         "status": true
                                     }
                                 }
@@ -1721,7 +1722,7 @@
         "/login": {
             "get": {
                 "tags": [
-                    "access"
+                    "users"
                 ],
                 "summary": "User sign in to use API",
                 "description": "This route will be responsible to user sign in to the API",
@@ -1769,7 +1770,7 @@
         "/logout": {
             "get": {
                 "tags": [
-                    "access"
+                    "users"
                 ],
                 "summary": "Logs out current logged in user session",
                 "description": "",
@@ -1778,7 +1779,7 @@
                         "bearerAuth": []
                     }
                 ],
-                "operationId": "logoutUser",
+                "operationId": "logout User",
                 "produces": [
                     "application/json",
                     "application/xml"
@@ -1851,6 +1852,12 @@
                     },
                     "cpfCnpj": {
                         "type": "number"
+                    },
+                    "password":{
+                        "type": "string"
+                    },
+                    "apiKey":{
+                        "type":"string"
                     },
                     "address": {
                         "$ref": "#/components/schemas/Address"
@@ -1938,32 +1945,6 @@
                     },
                     "user": {
                         "$ref": "#/components/schemas/User"
-                    },
-                    "status": {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "ApiUser": {
-                "type": "object",
-                "properties": {
-                    "username": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "phone": {
-                        "type": "number"
-                    },
-                    "cpfCnpj": {
-                        "type": "number"
-                    },
-                    "apiKey": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
                     },
                     "status": {
                         "type": "boolean"
