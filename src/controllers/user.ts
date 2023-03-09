@@ -36,7 +36,7 @@ export class UserController extends UserMongoDbRepository{
     try {
       const user = new User(req.body);
       await this.updateUserById(req.params.id, user);
-      res.status(201).send({ message: "The User has been successfully updated!", user });
+      res.status(200).send({ message: "The User has been successfully updated!", user });
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);

@@ -13,7 +13,7 @@ export class ProfileController extends ProfileMongoDbRepository{
 
     try {
       const profiles = await this.find({});
-      res.status(201).send(profiles);
+      res.status(200).send(profiles);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -37,7 +37,7 @@ export class ProfileController extends ProfileMongoDbRepository{
     try {
       const profile = new Profile(req.body);
       await this.updateProfileById(req.params.id, profile);
-      res.status(201).send({ message: "The profile has been successfully updated!", profile });
+      res.status(200).send({ message: "The profile has been successfully updated!", profile });
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -45,7 +45,7 @@ export class ProfileController extends ProfileMongoDbRepository{
   }
 
   @Post()
-  public async createUser(req: Request, res: Response): Promise<void> {
+  public async createProfile(req: Request, res: Response): Promise<void> {
 
     try {
       const existProfile = this.findProfileByName(req.body.name);

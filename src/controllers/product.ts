@@ -37,7 +37,7 @@ export class ProductController extends ProductMongoDbRepository {
     try {
       const product = new Product(req.body);
       await this.updateProductById(req.params.id, product);
-      res.status(201).send({ message: "The product has been successfully updated!", product });
+      res.status(200).send({ message: "The product has been successfully updated!", product });
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
