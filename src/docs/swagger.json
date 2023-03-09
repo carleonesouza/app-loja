@@ -74,7 +74,6 @@
                             "examples": {
                                 "product": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "name": "Cerveja Devassa",
                                         "description": "Ceverja Lata",
                                         "price": 8,
@@ -90,14 +89,20 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": " Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
-                    "400": {
+                    "404": {
                         "description": "Not Found!"
                     },
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -120,47 +125,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/Product"
-                                }
-                            },
-                            "examples": {
-                                "product": {
-                                    "value": [
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                            "name": "Cerveja Devassa",
-                                            "description": "Ceverja Lata",
-                                            "price": 8,
-                                            "classification": "ML",
-                                            "category": "6408c5fca1bb1f33b014dee2",
-                                            "volume": "350",
-                                            "quantity": 100,
-                                            "status": true
-                                        },
-                                        {
-                                            "_id": "6408dd63b76bc4618c8c09fc",
-                                            "name": "Cerveja Heineken",
-                                            "description": "Ceverja Lata",
-                                            "price": 10,
-                                            "classification": "ML",
-                                            "category": "6408c5fca1bb1f33b014dee2",
-                                            "volume": "350",
-                                            "quantity": 100,
-                                            "status": true
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -172,8 +143,10 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Product"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
                                 }
                             }
                         }
@@ -186,12 +159,16 @@
                 "tags": [
                     "products"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "query",
-                    "description": "Product ID",
-                    "required": true
-                }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "summary": "Return a specific product",
                 "description": "This route will be responsible for return a product by ID",
                 "security": [
@@ -199,31 +176,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Product"
-                            },
-                            "examples": {
-                                "product": {
-                                    "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "name": "Cerveja Devassa",
-                                        "description": "Ceverja Lata",
-                                        "price": 8,
-                                        "classification": "ML",
-                                        "category": "6408c5fca1bb1f33b014dee2",
-                                        "volume": "350",
-                                        "quantity": 100,
-                                        "status": true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -250,7 +209,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Product ID",
                         "required": true,
                         "type": "integer",
@@ -273,12 +232,14 @@
                             "examples": {
                                 "product": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "name": "Cerveja Devassa",
                                         "description": "Ceverja Lata",
                                         "price": 8,
                                         "classification": "ML",
-                                        "category": "6408c5fca1bb1f33b014dee2",
+                                        "category": {
+                                            "types": "object",
+                                            "$ref": "#/components/schemas/Category"
+                                        },
                                         "volume": "350",
                                         "quantity": 100,
                                         "status": true
@@ -289,6 +250,12 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": " Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -315,7 +282,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Product ID",
                         "required": true,
                         "type": "integer",
@@ -330,6 +297,12 @@
                     }
                 ],
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -363,7 +336,6 @@
                             "examples": {
                                 "category": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "name": "Bebidas",
                                         "description": "Bebidas",
                                         "status": true
@@ -374,14 +346,20 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": " Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
-                    "400": {
+                    "404": {
                         "description": "Not Found!"
                     },
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -404,37 +382,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/Category"
-                                }
-                            },
-                            "examples": {
-                                "category": {
-                                    "value": [
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                            "name": "Bebidas",
-                                            "description": "Bebidas",
-                                            "status": true
-                                        },
-                                        {
-                                            "_id": "6408dd63b76bc4618c8c09fc",
-                                            "name": "Alimentação",
-                                            "description": "Alimentação",
-                                            "status": true
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -460,12 +414,16 @@
                 "tags": [
                     "products"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "query",
-                    "description": "Category ID",
-                    "required": true
-                }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "summary": "Return a specific product category",
                 "description": "This route will be responsible for return a product category by ID",
                 "security": [
@@ -473,26 +431,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Category"
-                            },
-                            "examples": {
-                                "category": {
-                                    "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "name": "Bebidas",
-                                        "description": "Bebidas",
-                                        "status": true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -519,7 +464,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Category ID",
                         "required": true,
                         "type": "integer",
@@ -542,7 +487,6 @@
                             "examples": {
                                 "category": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "name": "Bebidas",
                                         "description": "Bebidas",
                                         "status": true
@@ -553,6 +497,12 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": " Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -579,7 +529,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Category ID",
                         "required": true,
                         "type": "integer",
@@ -594,6 +544,12 @@
                     }
                 ],
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -627,13 +583,12 @@
                             "examples": {
                                 "user": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "fullName": "Jhon Doe",
                                         "email": "jhonhdoe@test.com",
                                         "phone": 5531999999999,
                                         "cpfCnpj": 11111111100,
-                                        "address": "Rua XXX Bairro ZZZ CEP 000000",
-                                        "profile": "admin",
+                                        "address": "",
+                                        "profile": "",
                                         "status": true
                                     }
                                 }
@@ -642,14 +597,20 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
                     "404": {
                         "description": "Not Found!"
                     },
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -672,45 +633,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            },
-                            "examples": {
-                                "user": {
-                                    "value": [
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                            "fullName": "Jhon Doe",
-                                            "email": "jhonhdoe@test.com",
-                                            "phone": 5531999999999,
-                                            "cpfCnpj": 11111111100,
-                                            "address": "Rua XXX Bairro ZZZ CEP 000000",
-                                            "profile": "admin",
-                                            "status": true
-                                        },
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                            "fullName": "Jhon Doe 2",
-                                            "email": "jhonhdoe2@test.com",
-                                            "phone": 5531999999999,
-                                            "cpfCnpj": 22222222200,
-                                            "address": "Rua XXX Bairro ZZZ CEP 000000",
-                                            "profile": "atedimento",
-                                            "status": true
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -736,12 +665,15 @@
                 "tags": [
                     "users"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "query",
-                    "description": "User ID",
-                    "required": true
-                }
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
                 ],
                 "summary": "Return a specific user",
                 "description": "This route will be responsible for return an user by ID",
@@ -750,30 +682,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            },
-                            "examples": {
-                                "user": {
-                                    "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "fullName": "Jhon Doe",
-                                        "email": "jhonhdoe@test.com",
-                                        "phone": 5531999999999,
-                                        "cpfCnpj": 11111111100,
-                                        "address": "Rua XXX Bairro ZZZ CEP 000000",
-                                        "profile": "admin",
-                                        "status": true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -800,7 +715,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "User ID",
                         "required": true,
                         "type": "integer",
@@ -823,13 +738,12 @@
                             "examples": {
                                 "user": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "fullName": "Jhon Doe",
                                         "email": "jhonhdoe@test.com",
                                         "phone": 5531999999999,
                                         "cpfCnpj": 11111111100,
-                                        "address": "Rua XXX Bairro ZZZ CEP 000000",
-                                        "profile": "admin",
+                                        "address": "",
+                                        "profile": "",
                                         "status": true
                                     }
                                 }
@@ -838,6 +752,12 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -864,7 +784,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "User ID",
                         "required": true,
                         "type": "integer",
@@ -879,6 +799,12 @@
                     }
                 ],
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -912,7 +838,6 @@
                             "examples": {
                                 "profile": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "role": "admin",
                                         "status": true
                                     }
@@ -922,14 +847,20 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
                     "404": {
                         "description": "Not Found!"
                     },
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -952,35 +883,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/Profile"
-                                }
-                            },
-                            "examples": {
-                                "profile": {
-                                    "value": [
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                            "role": "admin",
-                                            "status": true
-                                        },
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                            "role": "atendimento",
-                                            "status": true
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1006,12 +915,15 @@
                 "tags": [
                     "users"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "query",
-                    "description": "Profile ID",
-                    "required": true
-                }
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Profile ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
                 ],
                 "summary": "Return a specific profile",
                 "description": "This route will be responsible for return an profile by ID",
@@ -1020,25 +932,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Profile"
-                            },
-                            "examples": {
-                                "profile": {
-                                    "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "role": "admin",
-                                        "status": true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1065,7 +965,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Profile ID",
                         "required": true,
                         "type": "integer",
@@ -1088,7 +988,6 @@
                             "examples": {
                                 "profile": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "role": "atendimento",
                                         "status": true
                                     }
@@ -1098,6 +997,12 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1124,7 +1029,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Profile ID",
                         "required": true,
                         "type": "integer",
@@ -1139,6 +1044,12 @@
                     }
                 ],
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1172,7 +1083,6 @@
                             "examples": {
                                 "address": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "street": "Rua XXX",
                                         "neighborhood": "Bairro ZZZ",
                                         "zipCode": "0000",
@@ -1184,14 +1094,20 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
                     "404": {
                         "description": "Not Found!"
                     },
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1214,39 +1130,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/Address"
-                                }
-                            },
-                            "examples": {
-                                "address": {
-                                    "value": [
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                        "street": "Rua XXX",
-                                        "neighborhood": "Bairro ZZZ",
-                                        "zipCode": "0000",
-                                        "status": true
-                                        },
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                        "street": "Rua XXX",
-                                        "neighborhood": "Bairro ZZZ",
-                                        "zipCode": "0000",
-                                        "status": true
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1272,12 +1162,15 @@
                 "tags": [
                     "users"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "query",
-                    "description": "Address ID",
-                    "required": true
-                }
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Address ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
                 ],
                 "summary": "Return a specific user address",
                 "description": "This route will be responsible for return an user address by ID",
@@ -1286,27 +1179,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Address"
-                            },
-                            "examples": {
-                                "address": {
-                                    "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "street": "Rua XXX",
-                                        "neighborhood": "Bairro ZZZ",
-                                        "zipCode": "0000",
-                                        "status": true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1333,7 +1212,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Address ID",
                         "required": true,
                         "type": "integer",
@@ -1356,7 +1235,6 @@
                             "examples": {
                                 "address": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "street": "Rua XXX",
                                         "neighborhood": "Bairro ZZZ",
                                         "zipCode": "0000",
@@ -1368,6 +1246,12 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1394,7 +1278,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Address ID",
                         "required": true,
                         "type": "integer",
@@ -1409,6 +1293,12 @@
                     }
                 ],
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1442,14 +1332,13 @@
                             "examples": {
                                 "sale": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "product": "Cerveja Devassa",
                                         "qantity": 3,
                                         "total": 24.00,
                                         "paymentMethod": "Credito",
                                         "change": 0,
                                         "paymentValue": 24.00,
-                                        "user": "John Doe",
+                                        "user": "",
                                         "status": true
                                     }
                                 }
@@ -1458,14 +1347,20 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
-                    "400": {
+                    "404": {
                         "description": "Not Found!"
                     },
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1488,47 +1383,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/Sale"
-                                }
-                            },
-                            "examples": {
-                                "sale": {
-                                    "value": [
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                            "product": "Cerveja Devassa",
-                                            "qantity": 3,
-                                            "total": 24.00,
-                                            "paymentMethod": "Credito",
-                                            "change": 0,
-                                            "paymentValue": 24.00,
-                                            "user": "John Doe",
-                                            "status": true
-                                        },
-                                        {
-                                            "_id": "6408d68ba95c3183f872fe23",
-                                            "product": "Cerveja Devassa",
-                                            "qantity": 3,
-                                            "total": 24.00,
-                                            "paymentMethod": "Credito",
-                                            "change": 0,
-                                            "paymentValue": 24.00,
-                                            "user": "John Doe",
-                                            "status": true
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1554,12 +1415,16 @@
                 "tags": [
                     "sales"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "query",
-                    "description": "Sales ID",
-                    "required": true
-                }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Sales ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "summary": "Return a specific sale",
                 "description": "This route will be responsible for return a sale by ID",
                 "security": [
@@ -1567,31 +1432,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Sale"
-                            },
-                            "examples": {
-                                "sale": {
-                                    "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "product": "Cerveja Devassa",
-                                        "qantity": 3,
-                                        "total": 24.00,
-                                        "paymentMethod": "Credito",
-                                        "change": 0,
-                                        "paymentValue": 24.00,
-                                        "user": "John Doe",
-                                        "status": true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1618,7 +1465,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Sales ID",
                         "required": true,
                         "type": "integer",
@@ -1641,14 +1488,13 @@
                             "examples": {
                                 "sale": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
                                         "product": "Cerveja Devassa",
                                         "qantity": 3,
                                         "total": 24.00,
                                         "paymentMethod": "Credito",
                                         "change": 0,
                                         "paymentValue": 24.00,
-                                        "user": "John Doe",
+                                        "user": "",
                                         "status": true
                                     }
                                 }
@@ -1657,6 +1503,12 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1683,7 +1535,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Sales ID",
                         "required": true,
                         "type": "integer",
@@ -1698,6 +1550,12 @@
                     }
                 ],
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1731,36 +1589,8 @@
                             "examples": {
                                 "cashie": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "user": "John Doe",
-                                        "sales": {
-                                            "type":"array",
-                                            "items":[
-                                                {
-                                                    "_id": "6408d68ba95c3183f872fe23",
-                                                    "product": "Cerveja Devassa",
-                                                    "qantity": 3,
-                                                    "total": 24.00,
-                                                    "paymentMethod": "Credito",
-                                                    "change": 0,
-                                                    "paymentValue": 24.00,
-                                                    "user": "John Doe",
-                                                    "status": true
-                                                },
-                                                {
-                                                    "_id": "6408d68ba95c3183f872fe23",
-                                                    "product": "Cerveja Devassa",
-                                                    "qantity": 3,
-                                                    "total": 24.00,
-                                                    "paymentMethod": "Credito",
-                                                    "change": 0,
-                                                    "paymentValue": 24.00,
-                                                    "user": "John Doe",
-                                                    "status": true
-                                                }
-
-                                            ]
-                                        },
+                                        "user": "",
+                                        "sales": "",
                                         "openValue": 50.00,
                                         "status": true,
                                         "closeValue": 250.00,
@@ -1772,14 +1602,20 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
-                    "400": {
+                    "404": {
                         "description": "Not Found!"
                     },
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1802,61 +1638,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/Cashier"
-                                }
-                            },
-                            "examples": {
-                                "cashie": {
-                                    "value": [
-                                        {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "user": "John Doe",
-                                        "sales": {
-                                            "type":"array",
-                                            "items":[
-                                                {
-                                                    "_id": "6408d68ba95c3183f872fe23",
-                                                    "product": "Cerveja Devassa",
-                                                    "qantity": 3,
-                                                    "total": 24.00,
-                                                    "paymentMethod": "Credito",
-                                                    "change": 0,
-                                                    "paymentValue": 24.00,
-                                                    "user": "John Doe",
-                                                    "status": true
-                                                },
-                                                {
-                                                    "_id": "6408d68ba95c3183f872fe23",
-                                                    "product": "Cerveja Devassa",
-                                                    "qantity": 3,
-                                                    "total": 24.00,
-                                                    "paymentMethod": "Credito",
-                                                    "change": 0,
-                                                    "paymentValue": 24.00,
-                                                    "user": "John Doe",
-                                                    "status": true
-                                                }
-
-                                            ]
-                                        },
-                                        "openValue": 50.00,
-                                        "status": true,
-                                        "closeValue": 250.00,
-                                        "closeDate": "20/03/2023"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1882,12 +1670,16 @@
                 "tags": [
                     "sales"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "query",
-                    "description": "Cashie ID",
-                    "required": true
-                }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Cashie ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "summary": "Return a specific cashie",
                 "description": "This route will be responsible for return a cashie by ID",
                 "security": [
@@ -1895,56 +1687,13 @@
                         "bearerAuth": []
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Cashier"
-                            },
-                            "examples": {
-                                "cashie": {
-                                    "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "user": "John Doe",
-                                        "sales": {
-                                            "type":"array",
-                                            "items":[
-                                                {
-                                                    "_id": "6408d68ba95c3183f872fe23",
-                                                    "product": "Cerveja Devassa",
-                                                    "qantity": 3,
-                                                    "total": 24.00,
-                                                    "paymentMethod": "Credito",
-                                                    "change": 0,
-                                                    "paymentValue": 24.00,
-                                                    "user": "John Doe",
-                                                    "status": true
-                                                },
-                                                {
-                                                    "_id": "6408d68ba95c3183f872fe23",
-                                                    "product": "Cerveja Devassa",
-                                                    "qantity": 3,
-                                                    "total": 24.00,
-                                                    "paymentMethod": "Credito",
-                                                    "change": 0,
-                                                    "paymentValue": 24.00,
-                                                    "user": "John Doe",
-                                                    "status": true
-                                                }
-
-                                            ]
-                                        },
-                                        "openValue": 50.00,
-                                        "status": true,
-                                        "closeValue": 250.00,
-                                        "closeDate": "20/03/2023"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1971,7 +1720,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Cashie ID",
                         "required": true,
                         "type": "integer",
@@ -1994,36 +1743,8 @@
                             "examples": {
                                 "cashie": {
                                     "value": {
-                                        "_id": "6408d68ba95c3183f872fe23",
-                                        "user": "John Doe",
-                                        "sales": {
-                                            "type":"array",
-                                            "items":[
-                                                {
-                                                    "_id": "6408d68ba95c3183f872fe23",
-                                                    "product": "Cerveja Devassa",
-                                                    "qantity": 3,
-                                                    "total": 24.00,
-                                                    "paymentMethod": "Credito",
-                                                    "change": 0,
-                                                    "paymentValue": 24.00,
-                                                    "user": "John Doe",
-                                                    "status": true
-                                                },
-                                                {
-                                                    "_id": "6408d68ba95c3183f872fe23",
-                                                    "product": "Cerveja Devassa",
-                                                    "qantity": 3,
-                                                    "total": 24.00,
-                                                    "paymentMethod": "Credito",
-                                                    "change": 0,
-                                                    "paymentValue": 24.00,
-                                                    "user": "John Doe",
-                                                    "status": true
-                                                }
-
-                                            ]
-                                        },
+                                        "user": "",
+                                        "sales": "",
                                         "openValue": 50.00,
                                         "status": true,
                                         "closeValue": 250.00,
@@ -2035,6 +1756,12 @@
                     }
                 },
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -2061,7 +1788,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "description": "Cashie ID",
                         "required": true,
                         "type": "integer",
@@ -2076,6 +1803,12 @@
                     }
                 ],
                 "responses": {
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "400": {
+                        "description": "Bad Request!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -2160,9 +1893,9 @@
                     }
                 }
             },
-            "Address":{
-                "type":"object",
-                "properties":{
+            "Address": {
+                "type": "object",
+                "properties": {
                     "street": {
                         "type": "string"
                     },
@@ -2175,19 +1908,17 @@
                     "status": {
                         "type": "boolean"
                     }
-
                 }
             },
-            "Profile":{
-                "type":"object",
-                "properties":{
+            "Profile": {
+                "type": "object",
+                "properties": {
                     "role": {
                         "type": "string"
                     },
                     "status": {
                         "type": "boolean"
                     }
-
                 }
             },
             "Sale": {
@@ -2235,7 +1966,7 @@
                         "type": "number"
                     },
                     "sales": {
-                        "type":"array",
+                        "type": "array",
                         "$ref": "#/components/schemas/Product"
                     },
                     "user": {

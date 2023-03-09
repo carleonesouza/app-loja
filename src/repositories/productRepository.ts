@@ -5,4 +5,5 @@ export interface ProductRepository extends BaseRepository<Product> {
   updateProductById(productId: string, data: Product): Promise<any>;
   findProductById(productId: string): Promise<Product>;
   findProductByName(productName: string): Promise<Product[]>;
+  findAllProducts(): Promise<Product[]>;
 }

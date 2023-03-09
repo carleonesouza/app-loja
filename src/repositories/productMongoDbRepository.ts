@@ -14,6 +14,17 @@ export class ProductMongoDbRepository
   }
 
 
+  public async findAllProducts(): Promise<Product[]> {
+    try {
+      const data = await this.productModel.find().populate('category');
+      return data;
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+  }
+
+
   public async updateProductById(productId: string, product: Product): Promise<any> {
     try {
       const data = await this.productModel.updateOne(
@@ -41,7 +52,8 @@ export class ProductMongoDbRepository
 
   public async findProductById(productId: string): Promise<Product> {
     try {
-      const data = await this.findOne({ _id: productId });
+      console.log(productId);
+      const data = await this.productModel.findOne({ _id: productId }).populate('category');
       return data as Product;
     } catch (error) {
       logger.error(error);
