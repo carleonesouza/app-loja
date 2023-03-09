@@ -1,9 +1,9 @@
-import { Sale } from "@src/models/sale";
+import { Order } from "@src/models/order";
 import { User } from "@src/models/user";
 
 export interface ICashie {
   id?: string;
-  sales: Array<Sale>
+  orders: Array<Order>
   openVlue: number;
   closeValue: number;
   closeDate: Date;  

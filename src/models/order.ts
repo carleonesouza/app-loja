@@ -1,12 +1,12 @@
-import { ISale } from "@src/entities/sale";
-import mongoose, { Schema } from "mongoose";
+import { IOrder } from "@src/entities/order";
+import mongoose from "mongoose";
 
 
-export interface Sale extends ISale {
+export interface Order extends IOrder {
     id?: string;
 }
 
-const saleSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
     quantity: { type: Number, required: true },
     total: { type: Number, required: true },
@@ -20,4 +20,4 @@ const saleSchema = new mongoose.Schema({
         timestamps: true
     }
 );
-export const Sale = mongoose.model<Sale>("Sale", saleSchema);
+export const Order = mongoose.model<Order>("Order", orderSchema);
