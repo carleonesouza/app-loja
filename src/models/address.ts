@@ -9,7 +9,7 @@ const schema = new mongoose.Schema(
     {
     street: { type: String, required: true },
     neighborhood:{ type: String, required: true },
-    zipeCode: { type: Number, required: true },
+    zipCode: { type: Number, required: true },
     status: { type: Boolean, required: false },
     },
     {

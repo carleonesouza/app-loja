@@ -2,6 +2,7 @@ import { Controller, Get, Put, Delete, Post } from '@overnightjs/core';
 import { UserMongoDbRepository } from '@src/repositories/userMongoDbRepository';
 import { Request, Response} from 'express';
 import logger from '@src/logger';
+import { User } from '@src/models/user';
 
 @Controller("v1/api/users")
 export class UserController extends UserMongoDbRepository{
@@ -50,10 +51,10 @@ export class UserController extends UserMongoDbRepository{
       if (await existuser) {
         res.status(409).send({ message: 'User Already exists!' });
       } else {
-        const product = new Product(req.body);
+        const user = new User(req.body);
 
-        await this.create(product);
-        res.status(201).send({ message: "The user has been created successfully!", product });
+        await this.create(user);
+        res.status(201).send({ message: "The user has been created successfully!", user });
       }
 
     } catch (error) {

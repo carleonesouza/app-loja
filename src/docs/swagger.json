@@ -24,10 +24,10 @@
     "basePath": "/v1",
     "tags": [
         {
-            "name": "categories",
-            "description": "Categories management API routes",
+            "name": "sales",
+            "description": "Sales management API routes",
             "externalDocs": {
-                "description": "Category management",
+                "description": "Sales management",
                 "url": "http://swagger.io"
             }
         },
@@ -124,11 +124,10 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type":"array",
-                                "items":{
+                                "type": "array",
+                                "items": {
                                     "$ref": "#/components/schemas/Product"
                                 }
-                                
                             },
                             "examples": {
                                 "product": {
@@ -142,8 +141,7 @@
                                             "category": "6408c5fca1bb1f33b014dee2",
                                             "volume": "350",
                                             "quantity": 100,
-                                            "status": true,
-                                            "__v": 0
+                                            "status": true
                                         },
                                         {
                                             "_id": "6408dd63b76bc4618c8c09fc",
@@ -154,8 +152,7 @@
                                             "category": "6408c5fca1bb1f33b014dee2",
                                             "volume": "350",
                                             "quantity": 100,
-                                            "status": true,
-                                            "__v": 0
+                                            "status": true
                                         }
                                     ]
                                 }
@@ -189,12 +186,12 @@
                 "tags": [
                     "products"
                 ],
-                "parameters": {
+                "parameters": [{
                     "name": "id",
                     "in": "query",
                     "description": "Product ID",
                     "required": true
-                },
+                }],
                 "summary": "Return a specific product",
                 "description": "This route will be responsible for return a product by ID",
                 "security": [
@@ -246,20 +243,20 @@
                     }
                 }
             },
-            "put":{
+            "put": {
                 "tags": [
                     "products"
                 ],
                 "parameters": [
                     {
-                      "name": "id",
-                      "in": "query",
-                      "description": "Product ID",
-                      "required": true,
-                      "type": "integer",
-                      "format": "int64"
+                        "name": "id",
+                        "in": "query",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
                     }
-                  ],
+                ],
                 "summary": "Update a specific product",
                 "description": "This route will be responsible for update a product by ID",
                 "security": [
@@ -310,22 +307,21 @@
                         }
                     }
                 }
-
             },
-            "delete":{
+            "delete": {
                 "tags": [
                     "products"
                 ],
                 "parameters": [
                     {
-                      "name": "id",
-                      "in": "query",
-                      "description": "Product ID",
-                      "required": true,
-                      "type": "integer",
-                      "format": "int64"
+                        "name": "id",
+                        "in": "query",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
                     }
-                  ],
+                ],
                 "summary": "Delete a specific product",
                 "description": "This route will be responsible for delete a product by ID",
                 "security": [
@@ -333,7 +329,6 @@
                         "bearerAuth": []
                     }
                 ],
-               
                 "responses": {
                     "401": {
                         "description": "Unauthorized!"
@@ -347,8 +342,272 @@
                 }
             }
         },
-        "/users":{
-               "post": {
+        "/categories": {
+            "post": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Register Product Category",
+                "description": "This route will be responsible for register a product category",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Category"
+                            },
+                            "examples": {
+                                "category": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "name": "Bebidas",
+                                        "description": "Bebidas",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "400": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Return a list of categories",
+                "description": "This route will be responsible for return a list of categories",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            },
+                            "examples": {
+                                "category": {
+                                    "value": [
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                            "name": "Bebidas",
+                                            "description": "Bebidas",
+                                            "status": true
+                                        },
+                                        {
+                                            "_id": "6408dd63b76bc4618c8c09fc",
+                                            "name": "Alimentação",
+                                            "description": "Alimentação",
+                                            "status": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/{id}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "query",
+                    "description": "Category ID",
+                    "required": true
+                }],
+                "summary": "Return a specific product category",
+                "description": "This route will be responsible for return a product category by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Category"
+                            },
+                            "examples": {
+                                "category": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "name": "Bebidas",
+                                        "description": "Bebidas",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "products"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Update a specific product category",
+                "description": "This route will be responsible for update a product category by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Category"
+                            },
+                            "examples": {
+                                "category": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "name": "Bebidas",
+                                        "description": "Bebidas",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "products"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Delete a specific product category",
+                "description": "This route will be responsible for delete a product category by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
                 "tags": [
                     "users"
                 ],
@@ -369,13 +628,12 @@
                                 "user": {
                                     "value": {
                                         "_id": "6408d68ba95c3183f872fe23",
-                                        "name": "Cerveja Devassa",
-                                        "description": "Ceverja Lata",
-                                        "price": 8,
-                                        "classification": "ML",
-                                        "category": "6408c5fca1bb1f33b014dee2",
-                                        "volume": "350",
-                                        "quantity": 100,
+                                        "fullName": "Jhon Doe",
+                                        "email": "jhonhdoe@test.com",
+                                        "phone": 5531999999999,
+                                        "cpfCnpj": 11111111100,
+                                        "address": "Rua XXX Bairro ZZZ CEP 000000",
+                                        "profile": "admin",
                                         "status": true
                                     }
                                 }
@@ -418,38 +676,33 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type":"array",
-                                "items":{
+                                "type": "array",
+                                "items": {
                                     "$ref": "#/components/schemas/User"
                                 }
-                                
                             },
                             "examples": {
                                 "user": {
                                     "value": [
                                         {
                                             "_id": "6408d68ba95c3183f872fe23",
-                                            "name": "Cerveja Devassa",
-                                            "description": "Ceverja Lata",
-                                            "price": 8,
-                                            "classification": "ML",
-                                            "category": "6408c5fca1bb1f33b014dee2",
-                                            "volume": "350",
-                                            "quantity": 100,
-                                            "status": true,
-                                            "__v": 0
+                                            "fullName": "Jhon Doe",
+                                            "email": "jhonhdoe@test.com",
+                                            "phone": 5531999999999,
+                                            "cpfCnpj": 11111111100,
+                                            "address": "Rua XXX Bairro ZZZ CEP 000000",
+                                            "profile": "admin",
+                                            "status": true
                                         },
                                         {
-                                            "_id": "6408dd63b76bc4618c8c09fc",
-                                            "name": "Cerveja Heineken",
-                                            "description": "Ceverja Lata",
-                                            "price": 10,
-                                            "classification": "ML",
-                                            "category": "6408c5fca1bb1f33b014dee2",
-                                            "volume": "350",
-                                            "quantity": 100,
-                                            "status": true,
-                                            "__v": 0
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                            "fullName": "Jhon Doe 2",
+                                            "email": "jhonhdoe2@test.com",
+                                            "phone": 5531999999999,
+                                            "cpfCnpj": 22222222200,
+                                            "address": "Rua XXX Bairro ZZZ CEP 000000",
+                                            "profile": "atedimento",
+                                            "status": true
                                         }
                                     ]
                                 }
@@ -474,6 +727,1363 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "query",
+                    "description": "User ID",
+                    "required": true
+                }
+                ],
+                "summary": "Return a specific user",
+                "description": "This route will be responsible for return an user by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "fullName": "Jhon Doe",
+                                        "email": "jhonhdoe@test.com",
+                                        "phone": 5531999999999,
+                                        "cpfCnpj": 11111111100,
+                                        "address": "Rua XXX Bairro ZZZ CEP 000000",
+                                        "profile": "admin",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Update a specific user",
+                "description": "This route will be responsible for update an user by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "fullName": "Jhon Doe",
+                                        "email": "jhonhdoe@test.com",
+                                        "phone": 5531999999999,
+                                        "cpfCnpj": 11111111100,
+                                        "address": "Rua XXX Bairro ZZZ CEP 000000",
+                                        "profile": "admin",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Delete a specific user",
+                "description": "This route will be responsible for delete an user by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/profile": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "register profile",
+                "description": "This route will be responsible for register an profile",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Profile"
+                            },
+                            "examples": {
+                                "profile": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "role": "admin",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Profile"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Return a list of profiles",
+                "description": "This route will be responsible for return a list of profiles",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Profile"
+                                }
+                            },
+                            "examples": {
+                                "profile": {
+                                    "value": [
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                            "role": "admin",
+                                            "status": true
+                                        },
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                            "role": "atendimento",
+                                            "status": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Profile"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/profile/{id}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "query",
+                    "description": "Profile ID",
+                    "required": true
+                }
+                ],
+                "summary": "Return a specific profile",
+                "description": "This route will be responsible for return an profile by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Profile"
+                            },
+                            "examples": {
+                                "profile": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "role": "admin",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Profile"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Profile ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Update a specific profile",
+                "description": "This route will be responsible for update an profile by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Profile"
+                            },
+                            "examples": {
+                                "profile": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "role": "atendimento",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Profile"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Profile ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Delete a specific user",
+                "description": "This route will be responsible for delete an profile by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/address": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "register user address",
+                "description": "This route will be responsible for register an user address",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Address"
+                            },
+                            "examples": {
+                                "address": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "street": "Rua XXX",
+                                        "neighborhood": "Bairro ZZZ",
+                                        "zipCode": "0000",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Address"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Return a list of user address",
+                "description": "This route will be responsible for return a list of user address",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Address"
+                                }
+                            },
+                            "examples": {
+                                "address": {
+                                    "value": [
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                        "street": "Rua XXX",
+                                        "neighborhood": "Bairro ZZZ",
+                                        "zipCode": "0000",
+                                        "status": true
+                                        },
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                        "street": "Rua XXX",
+                                        "neighborhood": "Bairro ZZZ",
+                                        "zipCode": "0000",
+                                        "status": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Address"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/address/{id}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "query",
+                    "description": "Address ID",
+                    "required": true
+                }
+                ],
+                "summary": "Return a specific user address",
+                "description": "This route will be responsible for return an user address by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Address"
+                            },
+                            "examples": {
+                                "address": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "street": "Rua XXX",
+                                        "neighborhood": "Bairro ZZZ",
+                                        "zipCode": "0000",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Address"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Address ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Update a specific user address",
+                "description": "This route will be responsible for update an user address by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Address"
+                            },
+                            "examples": {
+                                "address": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "street": "Rua XXX",
+                                        "neighborhood": "Bairro ZZZ",
+                                        "zipCode": "0000",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Address"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Address ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Delete a specific user address",
+                "description": "This route will be responsible for delete an user address by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/sales": {
+            "post": {
+                "tags": [
+                    "sales"
+                ],
+                "summary": "Register Sale",
+                "description": "This route will be responsible for register a sale",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sale"
+                            },
+                            "examples": {
+                                "sale": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "product": "Cerveja Devassa",
+                                        "qantity": 3,
+                                        "total": 24.00,
+                                        "paymentMethod": "Credito",
+                                        "change": 0,
+                                        "paymentValue": 24.00,
+                                        "user": "John Doe",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "400": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Sale"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "sales"
+                ],
+                "summary": "Return a list of sales",
+                "description": "This route will be responsible for return a list of sales",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Sale"
+                                }
+                            },
+                            "examples": {
+                                "sale": {
+                                    "value": [
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                            "product": "Cerveja Devassa",
+                                            "qantity": 3,
+                                            "total": 24.00,
+                                            "paymentMethod": "Credito",
+                                            "change": 0,
+                                            "paymentValue": 24.00,
+                                            "user": "John Doe",
+                                            "status": true
+                                        },
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                            "product": "Cerveja Devassa",
+                                            "qantity": 3,
+                                            "total": 24.00,
+                                            "paymentMethod": "Credito",
+                                            "change": 0,
+                                            "paymentValue": 24.00,
+                                            "user": "John Doe",
+                                            "status": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Sale"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales/{id}": {
+            "get": {
+                "tags": [
+                    "sales"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "query",
+                    "description": "Sales ID",
+                    "required": true
+                }],
+                "summary": "Return a specific sale",
+                "description": "This route will be responsible for return a sale by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sale"
+                            },
+                            "examples": {
+                                "sale": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "product": "Cerveja Devassa",
+                                        "qantity": 3,
+                                        "total": 24.00,
+                                        "paymentMethod": "Credito",
+                                        "change": 0,
+                                        "paymentValue": 24.00,
+                                        "user": "John Doe",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Sale"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "sales"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Sales ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Update a specific sale",
+                "description": "This route will be responsible for update a sale by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sale"
+                            },
+                            "examples": {
+                                "sale": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "product": "Cerveja Devassa",
+                                        "qantity": 3,
+                                        "total": 24.00,
+                                        "paymentMethod": "Credito",
+                                        "change": 0,
+                                        "paymentValue": 24.00,
+                                        "user": "John Doe",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Sale"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "sales"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Sales ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Delete a specific sale",
+                "description": "This route will be responsible for delete a sale by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/cashiers": {
+            "post": {
+                "tags": [
+                    "sales"
+                ],
+                "summary": "Register the cashie of the day",
+                "description": "This route will be responsible for register a cashie of the day",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cashier"
+                            },
+                            "examples": {
+                                "cashie": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "user": "John Doe",
+                                        "sales": {
+                                            "type":"array",
+                                            "items":[
+                                                {
+                                                    "_id": "6408d68ba95c3183f872fe23",
+                                                    "product": "Cerveja Devassa",
+                                                    "qantity": 3,
+                                                    "total": 24.00,
+                                                    "paymentMethod": "Credito",
+                                                    "change": 0,
+                                                    "paymentValue": 24.00,
+                                                    "user": "John Doe",
+                                                    "status": true
+                                                },
+                                                {
+                                                    "_id": "6408d68ba95c3183f872fe23",
+                                                    "product": "Cerveja Devassa",
+                                                    "qantity": 3,
+                                                    "total": 24.00,
+                                                    "paymentMethod": "Credito",
+                                                    "change": 0,
+                                                    "paymentValue": 24.00,
+                                                    "user": "John Doe",
+                                                    "status": true
+                                                }
+
+                                            ]
+                                        },
+                                        "openValue": 50.00,
+                                        "status": true,
+                                        "closeValue": 250.00,
+                                        "closeDate": "20/03/2023"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "400": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Cashier"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "sales"
+                ],
+                "summary": "Return a list of cashies",
+                "description": "This route will be responsible for return a list of cashies",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Cashier"
+                                }
+                            },
+                            "examples": {
+                                "cashie": {
+                                    "value": [
+                                        {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "user": "John Doe",
+                                        "sales": {
+                                            "type":"array",
+                                            "items":[
+                                                {
+                                                    "_id": "6408d68ba95c3183f872fe23",
+                                                    "product": "Cerveja Devassa",
+                                                    "qantity": 3,
+                                                    "total": 24.00,
+                                                    "paymentMethod": "Credito",
+                                                    "change": 0,
+                                                    "paymentValue": 24.00,
+                                                    "user": "John Doe",
+                                                    "status": true
+                                                },
+                                                {
+                                                    "_id": "6408d68ba95c3183f872fe23",
+                                                    "product": "Cerveja Devassa",
+                                                    "qantity": 3,
+                                                    "total": 24.00,
+                                                    "paymentMethod": "Credito",
+                                                    "change": 0,
+                                                    "paymentValue": 24.00,
+                                                    "user": "John Doe",
+                                                    "status": true
+                                                }
+
+                                            ]
+                                        },
+                                        "openValue": 50.00,
+                                        "status": true,
+                                        "closeValue": 250.00,
+                                        "closeDate": "20/03/2023"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Cashier"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cashiers/{id}": {
+            "get": {
+                "tags": [
+                    "sales"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "query",
+                    "description": "Cashie ID",
+                    "required": true
+                }],
+                "summary": "Return a specific cashie",
+                "description": "This route will be responsible for return a cashie by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cashier"
+                            },
+                            "examples": {
+                                "cashie": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "user": "John Doe",
+                                        "sales": {
+                                            "type":"array",
+                                            "items":[
+                                                {
+                                                    "_id": "6408d68ba95c3183f872fe23",
+                                                    "product": "Cerveja Devassa",
+                                                    "qantity": 3,
+                                                    "total": 24.00,
+                                                    "paymentMethod": "Credito",
+                                                    "change": 0,
+                                                    "paymentValue": 24.00,
+                                                    "user": "John Doe",
+                                                    "status": true
+                                                },
+                                                {
+                                                    "_id": "6408d68ba95c3183f872fe23",
+                                                    "product": "Cerveja Devassa",
+                                                    "qantity": 3,
+                                                    "total": 24.00,
+                                                    "paymentMethod": "Credito",
+                                                    "change": 0,
+                                                    "paymentValue": 24.00,
+                                                    "user": "John Doe",
+                                                    "status": true
+                                                }
+
+                                            ]
+                                        },
+                                        "openValue": 50.00,
+                                        "status": true,
+                                        "closeValue": 250.00,
+                                        "closeDate": "20/03/2023"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Cashier"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "sales"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Cashie ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Update a specific cashie",
+                "description": "This route will be responsible for update a product cashie by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cashier"
+                            },
+                            "examples": {
+                                "cashie": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "user": "John Doe",
+                                        "sales": {
+                                            "type":"array",
+                                            "items":[
+                                                {
+                                                    "_id": "6408d68ba95c3183f872fe23",
+                                                    "product": "Cerveja Devassa",
+                                                    "qantity": 3,
+                                                    "total": 24.00,
+                                                    "paymentMethod": "Credito",
+                                                    "change": 0,
+                                                    "paymentValue": 24.00,
+                                                    "user": "John Doe",
+                                                    "status": true
+                                                },
+                                                {
+                                                    "_id": "6408d68ba95c3183f872fe23",
+                                                    "product": "Cerveja Devassa",
+                                                    "qantity": 3,
+                                                    "total": 24.00,
+                                                    "paymentMethod": "Credito",
+                                                    "change": 0,
+                                                    "paymentValue": 24.00,
+                                                    "user": "John Doe",
+                                                    "status": true
+                                                }
+
+                                            ]
+                                        },
+                                        "openValue": 50.00,
+                                        "status": true,
+                                        "closeValue": 250.00,
+                                        "closeDate": "20/03/2023"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Cashier"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "sales"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Cashie ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "summary": "Delete a specific cashie",
+                "description": "This route will be responsible for delete a cashie by ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK"
                     }
                 }
             }
@@ -518,6 +2128,118 @@
                     },
                     "description": {
                         "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "number"
+                    },
+                    "cpfCnpj": {
+                        "type": "number"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "profile": {
+                        "$ref": "#/components/schemas/Profile"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Address":{
+                "type":"object",
+                "properties":{
+                    "street": {
+                        "type": "string"
+                    },
+                    "neighborhood": {
+                        "type": "string"
+                    },
+                    "zipCode": {
+                        "type": "number"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+
+                }
+            },
+            "Profile":{
+                "type":"object",
+                "properties":{
+                    "role": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+
+                }
+            },
+            "Sale": {
+                "type": "object",
+                "properties": {
+                    "quantity": {
+                        "type": "number"
+                    },
+                    "total": {
+                        "type": "number"
+                    },
+                    "paymentMethod": {
+                        "type": "string"
+                    },
+                    "change": {
+                        "type": "number"
+                    },
+                    "paymentValue": {
+                        "type": "number"
+                    },
+                    "product": {
+                        "$ref": "#/components/schemas/Product"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Cashier": {
+                "type": "object",
+                "properties": {
+                    "closeValue": {
+                        "type": "number"
+                    },
+                    "openValue": {
+                        "type": "number"
+                    },
+                    "closeDate": {
+                        "type": "date"
+                    },
+                    "paymentValue": {
+                        "type": "number"
+                    },
+                    "sales": {
+                        "type":"array",
+                        "$ref": "#/components/schemas/Product"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
                     },
                     "status": {
                         "type": "boolean"
