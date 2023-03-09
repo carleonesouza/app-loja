@@ -12,7 +12,7 @@ export class UserController extends UserMongoDbRepository{
 
     try {
       const users = await this.find({});
-      res.status(201).send(users);
+      res.status(200).send(users);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);

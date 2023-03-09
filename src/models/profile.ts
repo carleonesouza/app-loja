@@ -7,7 +7,7 @@ export interface Profile extends IProfile {
 
 const schema = new mongoose.Schema(
     {
-    role: { type: String, required: true },
+    role: { type: String, required: true, unique: true},
     status: { type: Boolean, required: false },
     },
     {
