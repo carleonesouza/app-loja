@@ -1,5 +1,5 @@
 import { User } from "@src/models/user";
-import { BaseRepository, WithId } from "@src/repositories/base";
+import { BaseRepository } from "@src/repositories/base";
 
 export interface UserRepository extends BaseRepository<User> {
   updateUserById(userId: string, data: User): Promise<any>;

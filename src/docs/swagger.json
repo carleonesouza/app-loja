@@ -593,8 +593,13 @@
                                         "email": "jhonhdoe@test.com",
                                         "phone": 5531999999999,
                                         "cpfCnpj": 11111111100,
-                                        "address": "",
-                                        "profile": "",
+                                        "address": {
+                                            "street": "Rua XXX",
+                                            "neighborhood": "Bairro ZZZ",
+                                            "zipCode": "0000",
+                                            "status": true
+                                        },
+                                        "profile": "6409fedafffd6f3b2a321361",
                                         "status": true
                                     }
                                 }
@@ -826,7 +831,7 @@
                 }
             }
         },
-        "/profile": {
+        "/profiles": {
             "post": {
                 "tags": [
                     "users"
@@ -922,7 +927,7 @@
                 }
             }
         },
-        "/profile/{id}": {
+        "/profiles/{id}": {
             "get": {
                 "tags": [
                     "users"
@@ -1050,258 +1055,6 @@
                 ],
                 "summary": "Delete a specific user",
                 "description": "This route will be responsible for delete an profile by ID",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "500": {
-                        "description": "Sorry, Internal Server Error!"
-                    },
-                    "400": {
-                        "description": "Bad Request!"
-                    },
-                    "401": {
-                        "description": "Unauthorized!"
-                    },
-                    "404": {
-                        "description": "Not Found!"
-                    },
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/address": {
-            "post": {
-                "tags": [
-                    "users"
-                ],
-                "summary": "register user address",
-                "description": "This route will be responsible for register an user address",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Address"
-                            },
-                            "examples": {
-                                "address": {
-                                    "value": {
-                                        "street": "Rua XXX",
-                                        "neighborhood": "Bairro ZZZ",
-                                        "zipCode": "0000",
-                                        "status": true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "500": {
-                        "description": "Sorry, Internal Server Error!"
-                    },
-                    "400": {
-                        "description": "Bad Request!"
-                    },
-                    "401": {
-                        "description": "Unauthorized!"
-                    },
-                    "404": {
-                        "description": "Not Found!"
-                    },
-                    "409": {
-                        "description": "Conflit!"
-                    },
-                    "201": {
-                        "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Address"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "users"
-                ],
-                "summary": "Return a list of user address",
-                "description": "This route will be responsible for return a list of user address",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "500": {
-                        "description": "Sorry, Internal Server Error!"
-                    },
-                    "400": {
-                        "description": "Bad Request!"
-                    },
-                    "401": {
-                        "description": "Unauthorized!"
-                    },
-                    "404": {
-                        "description": "Not Found!"
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Address"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/address/{id}": {
-            "get": {
-                "tags": [
-                    "users"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Address ID",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    }
-                ],
-                "summary": "Return a specific user address",
-                "description": "This route will be responsible for return an user address by ID",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "500": {
-                        "description": "Sorry, Internal Server Error!"
-                    },
-                    "400": {
-                        "description": "Bad Request!"
-                    },
-                    "401": {
-                        "description": "Unauthorized!"
-                    },
-                    "404": {
-                        "description": "Not Found!"
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Address"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "users"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Address ID",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    }
-                ],
-                "summary": "Update a specific user address",
-                "description": "This route will be responsible for update an user address by ID",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Address"
-                            },
-                            "examples": {
-                                "address": {
-                                    "value": {
-                                        "street": "Rua XXX",
-                                        "neighborhood": "Bairro ZZZ",
-                                        "zipCode": "0000",
-                                        "status": true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "500": {
-                        "description": "Sorry, Internal Server Error!"
-                    },
-                    "400": {
-                        "description": "Bad Request!"
-                    },
-                    "401": {
-                        "description": "Unauthorized!"
-                    },
-                    "404": {
-                        "description": "Not Found!"
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Address"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "users"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Address ID",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    }
-                ],
-                "summary": "Delete a specific user address",
-                "description": "This route will be responsible for delete an user address by ID",
                 "security": [
                     {
                         "bearerAuth": []

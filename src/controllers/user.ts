@@ -12,7 +12,7 @@ export class UserController extends UserMongoDbRepository{
 
     try {
       const users = await this.find({});
-      res.status(201).send(users);
+      res.status(200).send(users);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -36,7 +36,7 @@ export class UserController extends UserMongoDbRepository{
     try {
       const user = new User(req.body);
       await this.updateUserById(req.params.id, user);
-      res.status(201).send({ message: "The user has been successfully updated!", user });
+      res.status(201).send({ message: "The User has been successfully updated!", user });
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -47,14 +47,14 @@ export class UserController extends UserMongoDbRepository{
   public async createUser(req: Request, res: Response): Promise<void> {
 
     try {
-      const existuser = this.findUserByEmail(req.body.email);
-      if (await existuser) {
+      const existUser = this.findUserByEmail(req.body.email);
+      if (await existUser) {
         res.status(409).send({ message: 'User Already exists!' });
       } else {
         const user = new User(req.body);
 
         await this.create(user);
-        res.status(201).send({ message: "The user has been created successfully!", user });
+        res.status(201).send({ message: "The User has been created successfully!", user });
       }
 
     } catch (error) {
@@ -66,7 +66,7 @@ export class UserController extends UserMongoDbRepository{
   @Delete(":id")
   private async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id })
-    res.status(200).json({ message: "user deleted sucessfully!" });
+    res.status(200).json({ message: "The User was deleted sucessfully!" });
   }
 
 }
