@@ -1100,13 +1100,13 @@
                             "examples": {
                                 "sale": {
                                     "value": {
-                                        "product": "Cerveja Devassa",
-                                        "qantity": 3,
+                                        "product": "6408d68ba95c3183f872fe23",
+                                        "quantity": 3,
                                         "total": 24.00,
                                         "paymentMethod": "Credito",
                                         "change": 0,
                                         "paymentValue": 24.00,
-                                        "user": "",
+                                        "user": "640a0d0a9b99632ae8b84ab0",
                                         "status": true
                                     }
                                 }
@@ -1260,7 +1260,7 @@
                                 "sale": {
                                     "value": {
                                         "product": "Cerveja Devassa",
-                                        "qantity": 3,
+                                        "quantity": 3,
                                         "total": 24.00,
                                         "paymentMethod": "Credito",
                                         "change": 0,

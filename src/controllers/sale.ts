@@ -45,7 +45,7 @@ export class SaleController extends SaleMongoDbRepository{
   }
 
   @Post()
-  public async createUser(req: Request, res: Response): Promise<void> {
+  public async createSale(req: Request, res: Response): Promise<void> {
 
     try {      
         const sale = new Sale(req.body);
