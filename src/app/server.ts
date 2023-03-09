@@ -14,6 +14,7 @@ import { CategoryController } from '@src/controllers/category';
 import * as database from '@src/config/config';
 import morgan = require("morgan");
 import logger from "@src/logger";
+import { UserController } from '@src/controllers/user';
 
 /**
  * Configuração do express via Overnight
@@ -59,7 +60,8 @@ export class SetupServer extends Server {
   private setupControllers(): void {
     const productController = new ProductController();
     const categoryController = new CategoryController();
-    this.addControllers([productController, categoryController]);
+    const userController = new UserController();
+    this.addControllers([productController, categoryController, userController]);
   }
 
   private setupHeader(): void {

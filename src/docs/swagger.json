@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Amostra da API Controle de Caixa",
+        "title": "Controle de Caixa API",
         "description": "Essa é a API de Controle de Caixa, que pode ser utilizada junto com a aplicação para controle de caixa de pequenos négocios",
         "termsOfService": "http://example.com/terms/",
         "contact": {
@@ -24,26 +24,26 @@
     "basePath": "/v1",
     "tags": [
         {
-            "name": "controle de caixa",
-            "description": "Rotas API gestão controle de caixa",
+            "name": "categories",
+            "description": "Categories management API routes",
             "externalDocs": {
-                "description": "Operações de controle de caixa",
+                "description": "Category management",
                 "url": "http://swagger.io"
             }
         },
         {
-            "name": "loja",
-            "description": "Rotas API gestão da loja",
+            "name": "products",
+            "description": "Product management API routes",
             "externalDocs": {
-                "description": "Operações da loja",
+                "description": "Product management",
                 "url": "http://swagger.io"
             }
         },
         {
-            "name": "usuario",
-            "description": "Rotas API gestão de usuários",
+            "name": "users",
+            "description": "User management API routes",
             "externalDocs": {
-                "description": "Operações do usuários",
+                "description": "User management",
                 "url": "http://swagger.io"
             }
         }
@@ -56,10 +56,10 @@
         "/products": {
             "post": {
                 "tags": [
-                    "loja"
+                    "products"
                 ],
-                "summary": "cadastra um produto novo",
-                "description": "Essa rota será responsável por cadastrar um novo produto",
+                "summary": "Register Product",
+                "description": "This route will be responsible for register a product",
                 "security": [
                     {
                         "bearerAuth": []
@@ -91,10 +91,10 @@
                 },
                 "responses": {
                     "401": {
-                        "description": "Sem Autorização para acesso!"
+                        "description": "Unauthorized!"
                     },
                     "400": {
-                        "description": "Produto já existe!"
+                        "description": "Not Found!"
                     },
                     "200": {
                         "description": "OK",
@@ -111,10 +111,10 @@
             },
             "get": {
                 "tags": [
-                    "loja"
+                    "products"
                 ],
-                "summary": "Devolve uma lista de produtos",
-                "description": "Essa rota será responsável devolver uma lista de produtos",
+                "summary": "Return a list of products",
+                "description": "This route will be responsible for return a list of products",
                 "security": [
                     {
                         "bearerAuth": []
@@ -165,10 +165,10 @@
                 },
                 "responses": {
                     "401": {
-                        "description": "Sem Autorização para acesso!"
+                        "description": "Unauthorized!"
                     },
                     "404": {
-                        "description": "Não Encontrado!"
+                        "description": "Not Found!"
                     },
                     "200": {
                         "description": "OK",
@@ -187,16 +187,16 @@
         "/products/{id}": {
             "get": {
                 "tags": [
-                    "loja"
+                    "products"
                 ],
                 "parameters": {
                     "name": "id",
                     "in": "query",
-                    "description": "ID do produto",
+                    "description": "Product ID",
                     "required": true
                 },
-                "summary": "Devolve um produto específico",
-                "description": "Essa rota será responsável por devolver um produto pelo seu ID",
+                "summary": "Return a specific product",
+                "description": "This route will be responsible for return a product by ID",
                 "security": [
                     {
                         "bearerAuth": []
@@ -228,10 +228,10 @@
                 },
                 "responses": {
                     "401": {
-                        "description": "Sem Autorização para acesso!"
+                        "description": "Unauthorized!"
                     },
                     "404": {
-                        "description": "Não Encontrado!"
+                        "description": "Not Found!"
                     },
                     "200": {
                         "description": "OK",
@@ -248,20 +248,20 @@
             },
             "put":{
                 "tags": [
-                    "loja"
+                    "products"
                 ],
                 "parameters": [
                     {
                       "name": "id",
                       "in": "query",
-                      "description": "ID do produto",
+                      "description": "Product ID",
                       "required": true,
                       "type": "integer",
                       "format": "int64"
                     }
                   ],
-                "summary": "Atualiza um produto específico",
-                "description": "Essa rota será responsável por atualizar um produto pelo seu ID",
+                "summary": "Update a specific product",
+                "description": "This route will be responsible for update a product by ID",
                 "security": [
                     {
                         "bearerAuth": []
@@ -293,10 +293,10 @@
                 },
                 "responses": {
                     "401": {
-                        "description": "Sem Autorização para acesso!"
+                        "description": "Unauthorized!"
                     },
                     "404": {
-                        "description": "Não Encontrado!"
+                        "description": "Not Found!"
                     },
                     "200": {
                         "description": "OK",
@@ -314,20 +314,20 @@
             },
             "delete":{
                 "tags": [
-                    "loja"
+                    "products"
                 ],
                 "parameters": [
                     {
                       "name": "id",
                       "in": "query",
-                      "description": "ID do produto",
+                      "description": "Product ID",
                       "required": true,
                       "type": "integer",
                       "format": "int64"
                     }
                   ],
-                "summary": "Delata um produto específico",
-                "description": "Essa rota será responsável por deletar um produto pelo seu ID",
+                "summary": "Delete a specific product",
+                "description": "This route will be responsible for delete a product by ID",
                 "security": [
                     {
                         "bearerAuth": []
@@ -336,13 +336,144 @@
                
                 "responses": {
                     "401": {
-                        "description": "Sem Autorização para acesso!"
+                        "description": "Unauthorized!"
                     },
                     "404": {
-                        "description": "Não Encontrado!"
+                        "description": "Not Found!"
                     },
                     "200": {
                         "description": "OK"
+                    }
+                }
+            }
+        },
+        "/users":{
+               "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "register users",
+                "description": "This route will be responsible for register an user",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "_id": "6408d68ba95c3183f872fe23",
+                                        "name": "Cerveja Devassa",
+                                        "description": "Ceverja Lata",
+                                        "price": 8,
+                                        "classification": "ML",
+                                        "category": "6408c5fca1bb1f33b014dee2",
+                                        "volume": "350",
+                                        "quantity": 100,
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Return a list of users",
+                "description": "This route will be responsible for return a list of users",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type":"array",
+                                "items":{
+                                    "$ref": "#/components/schemas/User"
+                                }
+                                
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": [
+                                        {
+                                            "_id": "6408d68ba95c3183f872fe23",
+                                            "name": "Cerveja Devassa",
+                                            "description": "Ceverja Lata",
+                                            "price": 8,
+                                            "classification": "ML",
+                                            "category": "6408c5fca1bb1f33b014dee2",
+                                            "volume": "350",
+                                            "quantity": 100,
+                                            "status": true,
+                                            "__v": 0
+                                        },
+                                        {
+                                            "_id": "6408dd63b76bc4618c8c09fc",
+                                            "name": "Cerveja Heineken",
+                                            "description": "Ceverja Lata",
+                                            "price": 10,
+                                            "classification": "ML",
+                                            "category": "6408c5fca1bb1f33b014dee2",
+                                            "volume": "350",
+                                            "quantity": 100,
+                                            "status": true,
+                                            "__v": 0
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
                     }
                 }
             }

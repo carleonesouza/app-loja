@@ -15,7 +15,7 @@ export class CategoryController extends CategoryMongoDbRepository {
       res.status(200).send(category);
     } catch (error) {
       res.status(500).send(error);
-      logger.info(error);
+      logger.error(error);
     }
   }
 
@@ -26,7 +26,7 @@ export class CategoryController extends CategoryMongoDbRepository {
       res.status(200).send(product);
     } catch (error) {
       res.status(500).send(error);
-      logger.info(error);
+      logger.error(error);
     }
   }
 
@@ -41,7 +41,7 @@ export class CategoryController extends CategoryMongoDbRepository {
       res.status(201).send({ message: "The category has been successfully updated!", category });
     } catch (error) {
       res.status(500).send(error);
-      logger.info(error);
+      logger.error(error);
     }
   }
 
@@ -61,7 +61,7 @@ export class CategoryController extends CategoryMongoDbRepository {
       }
     } catch (error) {
       res.status(500).send({ message: error });
-      logger.info(error);
+      logger.error(error);
     }
   }
 

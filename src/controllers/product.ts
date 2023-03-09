@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Put, Delete } from "@overnightjs/core";
+import logger from "@src/logger";
 import { Product } from "@src/models/product";
 import { ProductMongoDbRepository } from "@src/repositories/productMongoDbRepository";
 import { Request, Response } from "express";
@@ -14,7 +15,7 @@ export class ProductController extends ProductMongoDbRepository {
       res.status(201).send(products);
     } catch (error) {
       res.status(500).send(error);
-      console.log(error);
+      logger.error(error);
     }
   }
 
@@ -25,7 +26,7 @@ export class ProductController extends ProductMongoDbRepository {
       res.status(200).send(product);
     } catch (error) {
       res.status(500).send(error);
-      console.log(error);
+      logger.error(error);
     }
   }
 
@@ -38,7 +39,7 @@ export class ProductController extends ProductMongoDbRepository {
       res.status(201).send({ message: "The product has been successfully updated!", product });
     } catch (error) {
       res.status(500).send(error);
-      console.log(error);
+      logger.error(error);
     }
   }
 
@@ -58,7 +59,7 @@ export class ProductController extends ProductMongoDbRepository {
 
     } catch (error) {
       res.status(500).send(error);
-      console.log(error);
+      logger.error(error);
     }
   }
 
