@@ -1,7 +1,7 @@
 import { ProductRepository } from "@src/repositories/productRepository";
 import { DbMongooseRepository } from "@src/repositories/dbRepository";
-import { WithId } from '@src/repositories/base';
 import { Product } from "@src/models/product";
+import logger from "@src/logger";
 
 export class ProductMongoDbRepository
   extends DbMongooseRepository<Product>
@@ -11,6 +11,17 @@ export class ProductMongoDbRepository
 
   constructor(productModel = Product) {
     super(productModel);
+  }
+
+
+  public async findAllProducts(): Promise<Product[]> {
+    try {
+      const data = await this.productModel.find().populate('category');
+      return data;
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
   }
 
 
@@ -32,6 +43,7 @@ export class ProductMongoDbRepository
       );
       return data;
     } catch (error) {
+      logger.error(error);
       this.handleError(error);
     }
   }
@@ -40,9 +52,11 @@ export class ProductMongoDbRepository
 
   public async findProductById(productId: string): Promise<Product> {
     try {
-      const data = await this.findOne({ _id: productId });
+      console.log(productId);
+      const data = await this.productModel.findOne({ _id: productId }).populate('category');
       return data as Product;
     } catch (error) {
+      logger.error(error);
       this.handleError(error);
     }
   }
@@ -52,6 +66,7 @@ export class ProductMongoDbRepository
       const data = await this.find({ name: productName });
       return data;
     } catch (error) {
+      logger.error(error);
       this.handleError(error);
     }
   }
