@@ -101,6 +101,9 @@
                     "404": {
                         "description": "Not Found!"
                     },
+                    "409": {
+                        "description": "Conflit!"
+                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -358,6 +361,9 @@
                     "404": {
                         "description": "Not Found!"
                     },
+                    "409": {
+                        "description": "Conflit!"
+                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -609,6 +615,9 @@
                     "404": {
                         "description": "Not Found!"
                     },
+                    "409": {
+                        "description": "Conflit!"
+                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -859,6 +868,9 @@
                     "404": {
                         "description": "Not Found!"
                     },
+                    "409": {
+                        "description": "Conflit!"
+                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -1105,6 +1117,9 @@
                     },
                     "404": {
                         "description": "Not Found!"
+                    },
+                    "409": {
+                        "description": "Conflit!"
                     },
                     "201": {
                         "description": "Created",
@@ -1359,6 +1374,9 @@
                     "404": {
                         "description": "Not Found!"
                     },
+                    "409": {
+                        "description": "Conflit!"
+                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -1610,9 +1628,12 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
-                    },
+                    },                   
                     "404": {
                         "description": "Not Found!"
+                    },
+                    "409": {
+                        "description": "Conflit!"
                     },
                     "201": {
                         "description": "Created",
