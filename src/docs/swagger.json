@@ -1339,7 +1339,7 @@
                 }
             }
         },
-        "/cashiers": {
+        "/cashies": {
             "post": {
                 "tags": [
                     "sales"
@@ -1355,7 +1355,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Cashier"
+                                "$ref": "#/components/schemas/Cashie"
                             },
                             "examples": {
                                 "cashie": {
@@ -1394,7 +1394,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Cashier"
+                                    "$ref": "#/components/schemas/Cashie"
                                 }
                             }
                         }
@@ -1431,7 +1431,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Cashier"
+                                    "$ref": "#/components/schemas/Cashie"
                                 }
                             }
                         }
@@ -1439,7 +1439,7 @@
                 }
             }
         },
-        "/cashiers/{id}": {
+        "/cashies/{id}": {
             "get": {
                 "tags": [
                     "sales"
@@ -1480,7 +1480,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Cashier"
+                                    "$ref": "#/components/schemas/Cashie"
                                 }
                             }
                         }
@@ -1512,7 +1512,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Cashier"
+                                "$ref": "#/components/schemas/Cashie"
                             },
                             "examples": {
                                 "cashie": {
@@ -1548,7 +1548,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Cashier"
+                                    "$ref": "#/components/schemas/Cashie"
                                 }
                             }
                         }
@@ -1724,7 +1724,7 @@
                     }
                 }
             },
-            "Cashier": {
+            "Cashie": {
                 "type": "object",
                 "properties": {
                     "closeValue": {
@@ -1735,9 +1735,6 @@
                     },
                     "closeDate": {
                         "type": "date"
-                    },
-                    "paymentValue": {
-                        "type": "number"
                     },
                     "sales": {
                         "type": "array",

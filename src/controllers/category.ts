@@ -22,8 +22,8 @@ export class CategoryController extends CategoryMongoDbRepository {
   @Get(":id")
   public async getCategoryId(req: Request, res: Response) {
     try {
-      const product = await this.findOne({ _id: req.params.id });
-      res.status(200).send(product);
+      const category = await this.findOne({ _id: req.params.id });
+      res.status(200).send(category);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -34,9 +34,7 @@ export class CategoryController extends CategoryMongoDbRepository {
   private async update(req: Request, res: Response) {
 
     try {
-
       const category = new Category(req.body);
-
       await this.updateCategoryById(req.params.id, category);
       res.status(201).send({ message: "The category has been successfully updated!", category });
     } catch (error) {
