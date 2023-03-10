@@ -26,7 +26,7 @@ export class ProductMongoDbRepository
   public async updateProductById(
     productId: string,
     product: Product
-  ): Promise<any> {
+  ): Promise<unknown> {
     try {
       const data = await this.productModel.updateOne(
         { _id: productId },

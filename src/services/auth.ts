@@ -1,5 +1,4 @@
 import baseUtil from "@src/util/baseUtil";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export interface JwtToken {
@@ -7,7 +6,7 @@ export interface JwtToken {
 }
 
 export default class AuthService {
-  public static generateToken(user: any): string {
+  public static generateToken(user: { email: unknown; id: unknown; }): string {
     return jwt.sign({ email: user.email, userId: user.id }, baseUtil.JWT_KEY, {
       expiresIn: baseUtil.LOCK_TIME,
     });

@@ -16,7 +16,7 @@ export class CategoryMongoDbRepository
   public async updateCategoryById(
     categoryId: string,
     category: Category
-  ): Promise<any> {
+  ): Promise<unknown> {
     try {
       const data = await this.categoryModel.updateOne(
         { _id: categoryId },

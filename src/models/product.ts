@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 import { IProduct } from "@src/entities/product";
 
 export interface Product extends IProduct {

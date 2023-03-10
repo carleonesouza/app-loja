@@ -2,7 +2,6 @@ import {
   Controller,
   Get,
   Post,
-  Put,
   Delete,
   ClassMiddleware,
 } from "@overnightjs/core";
