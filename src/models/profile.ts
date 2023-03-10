@@ -2,16 +2,16 @@ import mongoose from "mongoose";
 import { IProfile } from "@src/entities/profile";
 
 export interface Profile extends IProfile {
-    id?: string;
+  id?: string;
 }
 
 const schema = new mongoose.Schema(
-    {
-    role: { type: String, required: true, unique: true},
+  {
+    role: { type: String, required: true, unique: true },
     status: { type: Boolean, required: false },
-    },
-    {
-        timestamps: true
-    }
+  },
+  {
+    timestamps: true,
+  }
 );
 export const Profile = mongoose.model<Profile>("Profile", schema);

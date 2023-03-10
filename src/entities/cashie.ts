@@ -3,10 +3,10 @@ import { User } from "@src/models/user";
 
 export interface ICashie {
   id?: string;
-  orders: Array<Order>
+  orders: Array<Order>;
   openVlue: number;
   closeValue: number;
-  closeDate: Date;  
+  closeDate: Date;
   user: User;
   status: boolean;
 }

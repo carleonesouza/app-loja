@@ -1,20 +1,22 @@
 import { DbMongooseRepository } from "@src/repositories/dbRepository";
 import { Product } from "@src/models/product";
 import { Category } from "@src/models/category";
-import { CategoryRepository } from './categoryRepository';
+import { CategoryRepository } from "./categoryRepository";
 
 export class CategoryMongoDbRepository
   extends DbMongooseRepository<Category>
-  implements CategoryRepository {
-
+  implements CategoryRepository
+{
   private categoryModel = Product;
 
   constructor(categoryModel = Category) {
     super(categoryModel);
   }
 
-
-  public async updateCategoryById(categoryId: string, category: Category): Promise<any> {
+  public async updateCategoryById(
+    categoryId: string,
+    category: Category
+  ): Promise<unknown> {
     try {
       const data = await this.categoryModel.updateOne(
         { _id: categoryId },
@@ -31,8 +33,6 @@ export class CategoryMongoDbRepository
       this.handleError(error);
     }
   }
-
-
 
   public async findCategoryById(categoryId: string): Promise<Category> {
     try {

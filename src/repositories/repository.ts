@@ -10,4 +10,5 @@ export class DatabaseUnknownClientError extends DatabaseError {}
 
 export class DatabaseInternalError extends DatabaseError {}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export abstract class Repository<T> {}
