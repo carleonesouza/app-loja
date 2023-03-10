@@ -1,12 +1,14 @@
-import { Controller, Get, Put, Delete, Post } from '@overnightjs/core';
+import { Controller, Get, Put, Delete, Post, ClassMiddleware } from '@overnightjs/core';
 import { Request, Response} from 'express';
 import logger from '@src/logger';
 import { OrderMongoDbRepository } from '@src/repositories/orderMongoDbRepository';
 import { Order } from '@src/models/order';
+import { authMiddleware } from '@src/middlewares/auth';
 
 
 
 @Controller("v1/api/orders")
+@ClassMiddleware(authMiddleware)
 export class OrderController extends OrderMongoDbRepository{
 
   @Get()

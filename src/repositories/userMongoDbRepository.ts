@@ -1,8 +1,8 @@
-import { WithId } from '@src/repositories/base';
 import { UserRepository } from "@src/repositories/userRepository";
 import { DbMongooseRepository } from "@src/repositories/dbRepository";
 import { User } from "@src/models/user";
 import logger from "@src/logger";
+import { validatePassword } from "@src/middlewares/validade";
 
 export class UserMongoDbRepository
     extends DbMongooseRepository<User>
@@ -15,6 +15,24 @@ export class UserMongoDbRepository
     }
 
     public async login(email: string, password: string): Promise<any> {
+        try {
+            return this.userModel.findOne({ email: email })
+                .then((user) => {
+
+                    return validatePassword(password, user?.password);
+                })
+                .catch((error) => {
+                    logger.error(error);
+                    this.handleError(error);
+                });
+
+        } catch (error) {
+            logger.error(error);
+            this.handleError(error);
+        }
+    }
+
+    public async logout(): Promise<any> {
         throw new Error("Method not implemented.");
     }
 
@@ -39,11 +57,6 @@ export class UserMongoDbRepository
             this.handleError(error);
         }
     }
-
-    public async logout(): Promise<any> {
-        throw new Error("Method not implemented.");
-    }
-
 
     public async updateUserById(userId: string, user: User): Promise<any> {
         try {

@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Put, Delete } from "@overnightjs/core";
+import { Controller, Get, Post, Put, Delete, ClassMiddleware } from "@overnightjs/core";
 import { Category } from '@src/models/category';
 import { Request, Response } from "express";
 import { CategoryMongoDbRepository } from '../repositories/categoryMongoDbRepository';
 import logger from "@src/logger";
+import { authMiddleware } from "@src/middlewares/auth";
 
 @Controller("v1/api/categories")
+@ClassMiddleware(authMiddleware)
 export class CategoryController extends CategoryMongoDbRepository {
 
   @Get()

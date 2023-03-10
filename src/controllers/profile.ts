@@ -1,11 +1,13 @@
-import { Controller, Get, Put, Delete, Post } from '@overnightjs/core';
+import { Controller, Get, Put, Delete, Post, ClassMiddleware } from '@overnightjs/core';
 import { Request, Response} from 'express';
 import logger from '@src/logger';
 import { ProfileMongoDbRepository } from '@src/repositories/profileMongoDbRepository';
 import { Profile } from '@src/models/profile';
+import { authMiddleware } from '@src/middlewares/auth';
 
 
 @Controller("v1/api/profiles")
+@ClassMiddleware(authMiddleware)
 export class ProfileController extends ProfileMongoDbRepository{
 
   @Get()

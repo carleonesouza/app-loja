@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { IUser } from "@src/entities/user";
 import bcrypt from "bcrypt";
 import baseUtil from "@src/util/baseUtil";
-import { NextFunction } from "express";
 
 export interface User extends IUser {
     id?: string;
@@ -42,10 +41,5 @@ userSchema.pre('save', async function save(next) {
         return next();
     }
 });
-
-userSchema.methods.validatePassword = async function validatePassword(data: any) {
-    return bcrypt.compare(data, this.password);
-};
-
 
 export const User = mongoose.model<User>("User", userSchema);

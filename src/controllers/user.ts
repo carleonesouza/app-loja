@@ -1,15 +1,17 @@
-import { Controller, Get, Put, Delete, Post } from '@overnightjs/core';
+import { Controller, Get, Put, Delete, Post, Middleware } from '@overnightjs/core';
 import { UserMongoDbRepository } from '@src/repositories/userMongoDbRepository';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import logger from '@src/logger';
 import { User } from '@src/models/user';
 import baseUtil from '@src/util/baseUtil';
+import { authMiddleware } from '@src/middlewares/auth';
 
 @Controller("v1/api/users")
 export class UserController extends UserMongoDbRepository {
 
   @Get()
+  @Middleware(authMiddleware)
   public async getUser(req: Request, res: Response): Promise<void> {
 
     try {
@@ -22,6 +24,7 @@ export class UserController extends UserMongoDbRepository {
   }
 
   @Get(":id")
+  @Middleware(authMiddleware)
   public async getUserById(req: Request, res: Response) {
     try {
       const user = await this.findOne({ _id: req.params.id });
@@ -33,6 +36,7 @@ export class UserController extends UserMongoDbRepository {
   }
 
   @Put(":id")
+  @Middleware(authMiddleware)
   private async update(req: Request, res: Response) {
 
     try {
@@ -46,6 +50,7 @@ export class UserController extends UserMongoDbRepository {
   }
 
   @Post()
+  @Middleware(authMiddleware)
   public async createUser(req: Request, res: Response): Promise<void> {
 
     try {
@@ -75,10 +80,9 @@ export class UserController extends UserMongoDbRepository {
         const user = new User(req.body);
         this.register(user).then((result) => {
 
-          console.log(result.id);
           const token = jwt.sign({ email: result.email, userId: result.id }, baseUtil.JWT_KEY)
-
           res.status(201).send({ accessToken: token });
+
         }).catch((error) => {
           res.status(500).send(error);
           logger.error(error);
@@ -93,26 +97,40 @@ export class UserController extends UserMongoDbRepository {
     }
   }
 
-  @Get('login')
+  @Post('login')
   public async loginUser(req: Request, res: Response): Promise<void> {
+   
     try {
-      const existUser = this.findUserByEmail(req.body.email);
+      const existUser = this.findUserByEmail(req.body.email)
+        .then((user) => {
+          
+          this.login(req.body.email, req.body.password)
+            .then((result) => {
+              if (result) {
+                
+                const token = jwt.sign({ email: user.email, userId: user.id }, baseUtil.JWT_KEY)
+                res.status(200).send({ accessToken: token });
+              } else {
+                throw new Error("Email or password invalid!");
+              }
+            }).catch((err) => {
+              logger.error(err);
+              res.status(401).send({ message: 'Unauthorized!' });
+            })
+        });
       if (!existUser) {
         res.status(404).send({ message: 'User not exists!' });
-      } else {
-
-        const token = this.login(req.params.email, req.params.password);
-
-        res.status(200).send({ accessToken: token });
       }
 
     } catch (error) {
-      res.status(500).send(error);
       logger.error(error);
+      res.status(500).send(error).json();
+   
     }
   }
 
   @Delete(":id")
+  @Middleware(authMiddleware)
   private async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id })
     res.status(200).json({ message: "The User was deleted sucessfully!" });

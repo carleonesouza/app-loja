@@ -892,7 +892,7 @@
             }
         },
         "/users/login": {
-            "get": {
+            "post": {
                 "tags": [
                     "users"
                 ],
@@ -900,15 +900,15 @@
                 "description": "This route will be responsible to user sign in to the API",
                 "parameters": [
                     {
-                        "name": "username",
-                        "in": "query",
-                        "description": "The user name for login",
+                        "name": "email",
+                        "in": "path",
+                        "description": "The user email for login",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "password",
-                        "in": "query",
+                        "in": "path",
                         "description": "The password for login in clear text",
                         "required": true,
                         "type": "string"
@@ -935,6 +935,15 @@
                     },
                     "400": {
                         "description": "Invalid username/password supplied"
+                    },
+                    "500": {
+                        "description": "Sorry, Internal Server Error!"
+                    },
+                    "401": {
+                        "description": "Unauthorized!"
+                    },
+                    "404": {
+                        "description": "Not Found!"
                     }
                 }
             }
