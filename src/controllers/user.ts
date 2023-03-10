@@ -133,10 +133,23 @@ export class UserController extends UserMongoDbRepository {
     }
   }
 
+  @Get('logout')
+  private async logOut(req: Request, res: Response) {
+    try {
+      req.context = {
+        userId: this.logout()
+      }
+      res.status(200).send({ message: 'Logout was done Successfully'});
+    } catch (error) {
+      logger.error(error);
+      res.status(500).send(error).json();
+    }
+  }
+
   @Delete(":id")
   @Middleware(authMiddleware)
   private async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id });
-    res.status(200).json({ message: "The User was deleted sucessfully!" });
+    res.status(200).json({ message: "The User was deleted Successfully!" });
   }
 }

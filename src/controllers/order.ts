@@ -68,6 +68,6 @@ export class OrderController extends OrderMongoDbRepository {
   @Delete(":id")
   private async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id });
-    res.status(200).json({ message: "Order was deleted sucessfully!" });
+    res.status(200).json({ message: "Order was deleted successfully!" });
   }
 }

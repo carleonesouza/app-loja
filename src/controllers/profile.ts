@@ -80,6 +80,6 @@ export class ProfileController extends ProfileMongoDbRepository {
   @Delete(":id")
   private async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id });
-    res.status(200).json({ message: "Profile was deleted sucessfully!" });
+    res.status(200).json({ message: "Profile was deleted successfully!" });
   }
 }
