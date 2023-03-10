@@ -14,9 +14,8 @@ export class UserMongoDbRepository
     super(userModel);
   }
 
-
-   public  logout() {
-    return '';
+  public logout() {
+    return "";
   }
 
   public async login(email: string, password: string): Promise<unknown> {
@@ -35,7 +34,6 @@ export class UserMongoDbRepository
       this.handleError(error);
     }
   }
-
 
   public async register(data: User): Promise<User> {
     try {

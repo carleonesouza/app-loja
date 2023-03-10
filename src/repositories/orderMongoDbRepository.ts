@@ -27,7 +27,10 @@ export class OrderMongoDbRepository
     }
   }
 
-  public async updateOrderById(orderId: string, order: Order): Promise<unknown> {
+  public async updateOrderById(
+    orderId: string,
+    order: Order
+  ): Promise<unknown> {
     try {
       const data = await this.orderModel.updateOne(
         { _id: orderId },

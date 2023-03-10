@@ -42,12 +42,10 @@ export class ProfileController extends ProfileMongoDbRepository {
     try {
       const profile = new Profile(req.body);
       await this.updateProfileById(req.params.id, profile);
-      res
-        .status(200)
-        .send({
-          message: "The profile has been successfully updated!",
-          profile,
-        });
+      res.status(200).send({
+        message: "The profile has been successfully updated!",
+        profile,
+      });
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -64,12 +62,10 @@ export class ProfileController extends ProfileMongoDbRepository {
         const profile = new Profile(req.body);
 
         await this.create(profile);
-        res
-          .status(201)
-          .send({
-            message: "The profile has been created successfully!",
-            profile,
-          });
+        res.status(201).send({
+          message: "The profile has been created successfully!",
+          profile,
+        });
       }
     } catch (error) {
       res.status(500).send(error);

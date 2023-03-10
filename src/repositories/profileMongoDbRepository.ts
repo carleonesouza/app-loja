@@ -13,7 +13,10 @@ export class ProfileMongoDbRepository
     super(profileModel);
   }
 
-  public async updateProfileById(profileId: string, profile: Profile): Promise<unknown> {
+  public async updateProfileById(
+    profileId: string,
+    profile: Profile
+  ): Promise<unknown> {
     try {
       const data = await this.profileModel.updateOne(
         { _id: profileId },

@@ -42,12 +42,10 @@ export class CategoryController extends CategoryMongoDbRepository {
     try {
       const category = new Category(req.body);
       await this.updateCategoryById(req.params.id, category);
-      res
-        .status(201)
-        .send({
-          message: "The category has been successfully updated!",
-          category,
-        });
+      res.status(201).send({
+        message: "The category has been successfully updated!",
+        category,
+      });
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -65,12 +63,10 @@ export class CategoryController extends CategoryMongoDbRepository {
         const category = new Category(req.body);
 
         await this.create(category);
-        res
-          .status(201)
-          .send({
-            message: "The category has been created successfully!",
-            category,
-          });
+        res.status(201).send({
+          message: "The category has been created successfully!",
+          category,
+        });
       }
     } catch (error) {
       res.status(500).send({ message: error });

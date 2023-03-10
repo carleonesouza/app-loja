@@ -133,13 +133,13 @@ export class UserController extends UserMongoDbRepository {
     }
   }
 
-  @Get('logout')
+  @Get("logout")
   private async logOut(req: Request, res: Response) {
     try {
       req.context = {
-        userId: this.logout()
-      }
-      res.status(200).send({ message: 'Logout was done Successfully'});
+        userId: this.logout(),
+      };
+      res.status(200).send({ message: "Logout was done Successfully" });
     } catch (error) {
       logger.error(error);
       res.status(500).send(error).json();
