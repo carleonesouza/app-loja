@@ -1,5 +1,4 @@
 import { SetupServer } from "./app/server";
-import { checkAuth } from "./util/httpUtil";
 
 (async (): Promise<void> => {
   try {

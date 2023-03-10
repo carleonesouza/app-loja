@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Put, Delete } from "@overnightjs/core";
+import { Controller, Get, Post, Put, Delete, ClassMiddleware } from "@overnightjs/core";
 import { Request, Response } from "express";
 import logger from "@src/logger";
 import { CashieMongoDbRepository } from "@src/repositories/cashieMongoDbRepository";
 import { Cashie } from "@src/models/cashie";
+import { authMiddleware } from "@src/middlewares/auth";
 
 @Controller("v1/api/cashies")
+@ClassMiddleware(authMiddleware)
 export class CashieController extends CashieMongoDbRepository {
 
     @Get()
