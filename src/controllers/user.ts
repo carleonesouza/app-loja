@@ -1,11 +1,13 @@
 import { Controller, Get, Put, Delete, Post } from '@overnightjs/core';
 import { UserMongoDbRepository } from '@src/repositories/userMongoDbRepository';
-import { Request, Response} from 'express';
+import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import logger from '@src/logger';
 import { User } from '@src/models/user';
+import baseUtil from '@src/util/baseUtil';
 
 @Controller("v1/api/users")
-export class UserController extends UserMongoDbRepository{
+export class UserController extends UserMongoDbRepository {
 
   @Get()
   public async getUser(req: Request, res: Response): Promise<void> {
@@ -63,16 +65,26 @@ export class UserController extends UserMongoDbRepository{
     }
   }
 
-  @Post()
-  public async registerUser(req: Request, res: Response): Promise<void>{
+  @Post('register')
+  public async registerUser(req: Request, res: Response): Promise<void> {
     try {
       const existUser = this.findUserByEmail(req.body.email);
       if (await existUser) {
         res.status(409).send({ message: 'User Already exists!' });
       } else {
         const user = new User(req.body);
-        const token = this.register(user);
-        res.status(201).send({accessToken: token});
+        this.register(user).then((result) => {
+
+          console.log(result.id);
+          const token = jwt.sign({ email: result.email, userId: result.id }, baseUtil.JWT_KEY)
+
+          res.status(201).send({ accessToken: token });
+        }).catch((error) => {
+          res.status(500).send(error);
+          logger.error(error);
+        });
+
+
       }
 
     } catch (error) {
@@ -81,17 +93,17 @@ export class UserController extends UserMongoDbRepository{
     }
   }
 
-  @Get()
-  public async loginUser(req: Request, res: Response): Promise<void>{
+  @Get('login')
+  public async loginUser(req: Request, res: Response): Promise<void> {
     try {
       const existUser = this.findUserByEmail(req.body.email);
       if (!existUser) {
         res.status(404).send({ message: 'User not exists!' });
       } else {
-  
+
         const token = this.login(req.params.email, req.params.password);
 
-        res.status(200).send({accessToken: token});
+        res.status(200).send({ accessToken: token });
       }
 
     } catch (error) {

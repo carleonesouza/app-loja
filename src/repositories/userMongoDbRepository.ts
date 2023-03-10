@@ -1,9 +1,8 @@
+import { WithId } from '@src/repositories/base';
 import { UserRepository } from "@src/repositories/userRepository";
 import { DbMongooseRepository } from "@src/repositories/dbRepository";
-import bcrypt from "bcrypt";
 import { User } from "@src/models/user";
 import logger from "@src/logger";
-import baseUtil from '@src/util/baseUtil';
 
 export class UserMongoDbRepository
     extends DbMongooseRepository<User>
@@ -19,30 +18,21 @@ export class UserMongoDbRepository
         throw new Error("Method not implemented.");
     }
 
-    public async register(data: User): Promise<any> {
+    public async register(data: User): Promise<User> {
+
         try {
-            bcrypt.hash(data.email, baseUtil.SALT_WORK_FACTOR, async (err, hash) => {
-                if (err) {
-                    throw new Error("Internal Error");
-                } else {
-                    const user = new User({
-                        fullName: data.fullName,
-                        email: data.email,
-                        phone: data.phone,
-                        cpfCnpj: data.cpfCnpj,
-                        password: hash,
-                        apiKey: data.apiKey,
-                        address: data.address
-                    });
-                    return user
-                        .save()
-                        .then((result) => result)
-                        .catch((error) => {
-                            logger.error(error);
-                            this.handleError(error);
-                        });
-                }
-            })
+            const user = new User({
+                fullName: data.fullName,
+                email: data.email,
+                phone: data.phone,
+                cpfCnpj: data.cpfCnpj,
+                password: data.password,
+                apiKey: data.apiKey,
+                address: data.address
+            });
+
+            const newUser = await user.save();
+            return newUser as User;
 
         } catch (error) {
             logger.error(error);
