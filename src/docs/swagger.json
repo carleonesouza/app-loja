@@ -946,22 +946,23 @@
                 ],
                 "summary": "User sign in to use API",
                 "description": "This route will be responsible to user sign in to the API",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "path",
-                        "description": "The user email for login",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "password",
-                        "in": "path",
-                        "description": "The password for login in clear text",
-                        "required": true,
-                        "type": "string"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "email": "jhonhdoe@test.com",
+                                        "password": "122356d"
+                                    }
+                                }
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "successful operation",
