@@ -5,18 +5,17 @@ import logger from "@src/logger";
 
 export class ProductMongoDbRepository
   extends DbMongooseRepository<Product>
-  implements ProductRepository {
-
+  implements ProductRepository
+{
   private productModel = Product;
 
   constructor(productModel = Product) {
     super(productModel);
   }
 
-
   public async findAllProducts(): Promise<Product[]> {
     try {
-      const data = await this.productModel.find().populate('category');
+      const data = await this.productModel.find().populate("category");
       return data;
     } catch (error) {
       logger.error(error);
@@ -24,8 +23,10 @@ export class ProductMongoDbRepository
     }
   }
 
-
-  public async updateProductById(productId: string, product: Product): Promise<any> {
+  public async updateProductById(
+    productId: string,
+    product: Product
+  ): Promise<any> {
     try {
       const data = await this.productModel.updateOne(
         { _id: productId },
@@ -48,12 +49,12 @@ export class ProductMongoDbRepository
     }
   }
 
-
-
   public async findProductById(productId: string): Promise<Product> {
     try {
       console.log(productId);
-      const data = await this.productModel.findOne({ _id: productId }).populate('category');
+      const data = await this.productModel
+        .findOne({ _id: productId })
+        .populate("category");
       return data as Product;
     } catch (error) {
       logger.error(error);

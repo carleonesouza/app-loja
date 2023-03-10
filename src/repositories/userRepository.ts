@@ -7,5 +7,5 @@ export interface UserRepository extends BaseRepository<User> {
   findUserByEmail(email: string): Promise<User>;
   login(email: string, password: string): Promise<any>;
   register(data: User): Promise<User>;
-  logout():Promise<any>;
+  logout(): Promise<any>;
 }

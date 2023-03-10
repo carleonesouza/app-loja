@@ -5,5 +5,5 @@ export interface OrderRepository extends BaseRepository<Order> {
   updateOrderById(orderId: string, data: Order): Promise<any>;
   findOrderById(orderId: string): Promise<Order>;
   findOrderByEmail(email: string): Promise<Order>;
-  findAllOrders():Promise<Order[]>;
+  findAllOrders(): Promise<Order[]>;
 }

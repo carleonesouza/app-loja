@@ -10,14 +10,14 @@ import swaggerUi = require("swagger-ui-express");
 import swaggerDocs = require("@src/docs/swagger.json");
 import fs = require("fs");
 import { apiErrorHandle } from "@src/middlewares/error-handle";
-import { CategoryController } from '@src/controllers/category';
-import * as database from '@src/config/config';
+import { CategoryController } from "@src/controllers/category";
+import * as database from "@src/config/config";
 import morgan = require("morgan");
 import logger from "@src/logger";
-import { UserController } from '@src/controllers/user';
-import { ProfileController } from '@src/controllers/profile';
-import { OrderController } from '../controllers/order';
-import { CashieController } from '../controllers/cashie';
+import { UserController } from "@src/controllers/user";
+import { ProfileController } from "@src/controllers/profile";
+import { OrderController } from "../controllers/order";
+import { CashieController } from "../controllers/cashie";
 
 /**
  * Configuração do express via Overnight
@@ -52,7 +52,7 @@ export class SetupServer extends Server {
   private setupExpress(): void {
     this.app.use(bodyParser.json());
     this.app.use(cors());
-    this.app.use(morgan('dev'));
+    this.app.use(morgan("dev"));
     this.app.options("*", cors());
   }
 
@@ -67,9 +67,14 @@ export class SetupServer extends Server {
     const profileController = new ProfileController();
     const orderController = new OrderController();
     const cashieController = new CashieController();
-    this.addControllers([productController, categoryController,
-                         userController, profileController,
-                         orderController, cashieController]);
+    this.addControllers([
+      productController,
+      categoryController,
+      userController,
+      profileController,
+      orderController,
+      cashieController,
+    ]);
   }
 
   private setupHeader(): void {

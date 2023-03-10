@@ -6,7 +6,7 @@ export interface Category extends ICategory {
 }
 
 const schema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true},
+  name: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   status: { type: Boolean, required: false },
 });

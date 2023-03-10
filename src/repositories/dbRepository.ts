@@ -21,7 +21,7 @@ export abstract class DbMongooseRepository<
       const createdData = await model.save();
       return createdData.toJSON<WithId<T>>();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       this.handleError(error);
     }
   }
@@ -46,11 +46,10 @@ export abstract class DbMongooseRepository<
 
   async deleteOne(filter: FilterOptions) {
     try {
-       await this.model.deleteOne(filter);
+      await this.model.deleteOne(filter);
     } catch (error) {
       this.handleError(error);
     }
-    
   }
 
   protected handleError(error: unknown): never {
