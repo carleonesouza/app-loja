@@ -98,6 +98,9 @@
                     "401": {
                         "description": "Unauthorized!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "404": {
                         "description": "Not Found!"
                     },
@@ -137,6 +140,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -188,6 +194,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -262,6 +271,9 @@
                     "401": {
                         "description": "Unauthorized!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "404": {
                         "description": "Not Found!"
                     },
@@ -308,6 +320,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -358,6 +373,9 @@
                     "401": {
                         "description": "Unauthorized!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "404": {
                         "description": "Not Found!"
                     },
@@ -397,6 +415,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -446,6 +467,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -512,6 +536,9 @@
                     "401": {
                         "description": "Unauthorized!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "404": {
                         "description": "Not Found!"
                     },
@@ -558,6 +585,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -622,6 +652,9 @@
                     "404": {
                         "description": "Not Found!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "409": {
                         "description": "Conflit!"
                     },
@@ -658,6 +691,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -707,6 +743,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -777,6 +816,9 @@
                     "401": {
                         "description": "Unauthorized!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "404": {
                         "description": "Not Found!"
                     },
@@ -823,6 +865,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -871,6 +916,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -941,6 +989,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -1015,6 +1066,9 @@
                     "404": {
                         "description": "Not Found!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "409": {
                         "description": "Conflit!"
                     },
@@ -1051,6 +1105,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -1100,6 +1157,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -1162,6 +1222,9 @@
                     "400": {
                         "description": "Bad Request!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "401": {
                         "description": "Unauthorized!"
                     },
@@ -1211,6 +1274,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -1269,6 +1335,9 @@
                     "404": {
                         "description": "Not Found!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "409": {
                         "description": "Conflit!"
                     },
@@ -1305,6 +1374,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -1354,6 +1426,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -1434,6 +1509,9 @@
                     "401": {
                         "description": "Unauthorized!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "404": {
                         "description": "Not Found!"
                     },
@@ -1480,6 +1558,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -1536,6 +1617,9 @@
                     "401": {
                         "description": "Unauthorized!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "404": {
                         "description": "Not Found!"
                     },
@@ -1575,6 +1659,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
@@ -1625,6 +1712,9 @@
                     "401": {
                         "description": "Unauthorized!"
                     },
+                    "403": {
+                        "description": "Forbidden!"
+                    },
                     "404": {
                         "description": "Not Found!"
                     },
@@ -1671,6 +1761,9 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    },
+                    "403": {
+                        "description": "Forbidden!"
                     },
                     "404": {
                         "description": "Not Found!"
