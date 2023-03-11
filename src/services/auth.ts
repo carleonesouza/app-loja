@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import { JwtToken } from "@src/entities/jwt-token";
 
 export default class AuthService {
-
   public static generateToken(email: string, id: string): string {
     return jwt.sign({ email: email, userId: id }, baseUtil.JWT_KEY, {
       expiresIn: baseUtil.LOCK_TIME,

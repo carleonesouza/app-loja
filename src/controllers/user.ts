@@ -87,7 +87,10 @@ export class UserController extends UserMongoDbRepository {
         const user = new User(req.body);
         this.register(user)
           .then((result) => {
-            const token =  AuthService.generateToken(result.email, result.id as string);
+            const token = AuthService.generateToken(
+              result.email,
+              result.id as string
+            );
             res.status(201).send({ accessToken: token });
           })
           .catch((error) => {
@@ -108,7 +111,10 @@ export class UserController extends UserMongoDbRepository {
         this.login(req.body.email, req.body.password)
           .then((result) => {
             if (result) {
-              const token = AuthService.generateToken(user.email, user.id as string);
+              const token = AuthService.generateToken(
+                user.email,
+                user.id as string
+              );
               res.status(200).send({ accessToken: token });
             } else {
               throw new Error("Email or password invalid!");

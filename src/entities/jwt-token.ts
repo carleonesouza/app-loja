@@ -1,5 +1,4 @@
 export interface JwtToken {
-    sub: string;
-    key: string;
-  }
-  
+  sub: string;
+  key: string;
+}
