@@ -8,11 +8,11 @@ import {
 } from "@overnightjs/core";
 import { UserMongoDbRepository } from "@src/repositories/userMongoDbRepository";
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import logger from "@src/logger";
 import { User } from "@src/models/user";
-import baseUtil from "@src/util/baseUtil";
 import { authMiddleware } from "@src/middlewares/auth";
+import { apiKey } from "@src/middlewares/api-key";
+import AuthService from "@src/services/auth";
 
 @Controller("v1/api/users")
 export class UserController extends UserMongoDbRepository {
@@ -77,6 +77,7 @@ export class UserController extends UserMongoDbRepository {
   }
 
   @Post("register")
+  @Middleware(apiKey)
   public async registerUser(req: Request, res: Response): Promise<void> {
     try {
       const existUser = this.findUserByEmail(req.body.email);
@@ -86,10 +87,7 @@ export class UserController extends UserMongoDbRepository {
         const user = new User(req.body);
         this.register(user)
           .then((result) => {
-            const token = jwt.sign(
-              { email: result.email, userId: result.id },
-              baseUtil.JWT_KEY
-            );
+            const token =  AuthService.generateToken(result.email, result.id as string);
             res.status(201).send({ accessToken: token });
           })
           .catch((error) => {
@@ -110,10 +108,7 @@ export class UserController extends UserMongoDbRepository {
         this.login(req.body.email, req.body.password)
           .then((result) => {
             if (result) {
-              const token = jwt.sign(
-                { email: user.email, userId: user.id },
-                baseUtil.JWT_KEY
-              );
+              const token = AuthService.generateToken(user.email, user.id as string);
               res.status(200).send({ accessToken: token });
             } else {
               throw new Error("Email or password invalid!");

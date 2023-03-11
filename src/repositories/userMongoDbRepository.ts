@@ -4,10 +4,10 @@ import { User } from "@src/models/user";
 import logger from "@src/logger";
 import { validatePassword } from "@src/middlewares/validate";
 
+
 export class UserMongoDbRepository
   extends DbMongooseRepository<User>
-  implements UserRepository
-{
+  implements UserRepository {
   private userModel = User;
 
   constructor(userModel = User) {
@@ -36,7 +36,9 @@ export class UserMongoDbRepository
   }
 
   public async register(data: User): Promise<User> {
+
     try {
+
       const user = new User({
         fullName: data.fullName,
         email: data.email,
@@ -44,11 +46,10 @@ export class UserMongoDbRepository
         cpfCnpj: data.cpfCnpj,
         password: data.password,
         apiKey: data.apiKey,
-        address: data.address,
       });
-
       const newUser = await user.save();
       return newUser as User;
+
     } catch (error) {
       logger.error(error);
       this.handleError(error);

@@ -1,13 +1,11 @@
 import baseUtil from "@src/util/baseUtil";
 import jwt from "jsonwebtoken";
-
-export interface JwtToken {
-  sub: string;
-}
+import { JwtToken } from "@src/entities/jwt-token";
 
 export default class AuthService {
-  public static generateToken(user: { email: unknown; id: unknown }): string {
-    return jwt.sign({ email: user.email, userId: user.id }, baseUtil.JWT_KEY, {
+
+  public static generateToken(email: string, id: string): string {
+    return jwt.sign({ email: email, userId: id }, baseUtil.JWT_KEY, {
       expiresIn: baseUtil.LOCK_TIME,
     });
   }
