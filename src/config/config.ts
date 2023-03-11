@@ -1,5 +1,5 @@
 import { connect as mongooseConnect, connection } from "mongoose";
-import util from "../util/baseUtil";
+import util from "@src/util/baseUtil";
 import logger from "@src/logger";
 
 // Connect to MongoDB
