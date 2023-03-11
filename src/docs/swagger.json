@@ -20,7 +20,8 @@
             "url": "https://app-loja.azurewebsites.net/v1/api"
         }
     ],
-    "host": "controlecaixa.swagger.io",
+    "host": "https://app-loja.azurewebsites.net/v1/api",
+    "schema": ["http"],
     "basePath": "/v1",
     "tags": [
         {

@@ -116,6 +116,9 @@ export class SetupServer extends Server {
   }
 
   public start(): void {
+    this.getApp().get('/', (req, res)=>{
+      res.send("Hello World!");
+    });
     this.server = this.app.listen(this.port, () => {
       logger.info("Server listening on port: " + this.port);
     });
