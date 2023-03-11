@@ -17,7 +17,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:4000/v1/api"
+            "url": "https://app-loja.azurewebsites.net/v1/api"
         }
     ],
     "host": "controlecaixa.swagger.io",
