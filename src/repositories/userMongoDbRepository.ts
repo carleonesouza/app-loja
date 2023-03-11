@@ -3,7 +3,6 @@ import { DbMongooseRepository } from "@src/repositories/dbRepository";
 import { User } from "@src/models/user";
 import logger from "@src/logger";
 import { validatePassword } from "@src/middlewares/validate";
-import baseUtil from "@src/util/baseUtil";
 
 
 export class UserMongoDbRepository
