@@ -26,7 +26,7 @@ import { CashieController } from "../controllers/cashie";
 export class SetupServer extends Server {
   private server?: http.Server;
 
-  constructor(private port = 4000) {
+  constructor(private port = 8080) {
     super();
   }
 
