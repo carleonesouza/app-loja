@@ -1,20 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2019",
-    "outDir": "./dist/",
-    "noImplicitAny": true,
-    "jsx": "react",
-    "allowJs": true,
-    "moduleResolution": "node",
+    "target": "ES2016",
     "module": "commonjs",
+    "rootDir": "./",
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "allowJs": true,
+    "moduleResolution": "Node",
     "lib": [
       "es2019"
     ],
-    "sourceMap": true,
-    
+    "sourceMap": true,    
     "strict": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true,
+    "strictFunctionTypes": true, 
     "noImplicitThis": true,
     "resolveJsonModule": true,
     "alwaysStrict": true,
@@ -39,6 +38,7 @@
     "emitDecoratorMetadata": true
   },
   "include": [
+    "**/*",
     "./src/**/*.ts",
     "./test/**/*.ts" ],
   "exclude": [
@@ -46,4 +46,8 @@
     "dist"
   ],
   "files":["src/types.d.ts"],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+  }
 }

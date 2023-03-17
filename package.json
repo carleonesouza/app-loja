@@ -4,9 +4,9 @@
   "description": "Controle de Caixa API para gestão financaira de pequenos negócios",
   "main": "dist/src/index.js",
   "scripts": {
-    "dev": "nodemon",
-    "start": " tsc && node dist/src/index.js",
-    "build": "tsc",
+    "dev": "ts-node-dev --poll src/index.ts",
+    "start": "npm run build && node ./dist/src/index.js",
+    "build": "rimraf ./dist && tsc",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "test:functional": "jest --projects ./test --runInBand --detectOpenHandles",
@@ -50,10 +50,12 @@
     "morgan": "^1.10.0",
     "pino-pretty": "^9.4.0",
     "prettier": "^2.8.3",
+    "rimraf": "^4.4.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.5"
   }
 }
