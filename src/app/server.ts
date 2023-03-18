@@ -26,7 +26,7 @@ import bodyParser from "body-parser";
 export class SetupServer extends Server {
   private server?: http.Server;
 
-  constructor(private port = 8080) {
+  constructor(private port = 8888) {
     super();
   }
 

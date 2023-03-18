@@ -1,6 +1,8 @@
 FROM node:16 as development
+
+RUN mkdir -p /opt/app
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /opt/app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -16,5 +18,5 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 8080
+EXPOSE 8888
 CMD [ "node", "dist/index.js ]
