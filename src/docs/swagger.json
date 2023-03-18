@@ -17,10 +17,10 @@
     },
     "servers": [
         {
-            "url": "https://app-loja.azurewebsites.net/v1/api"
+            "url": "http://0.0.0.0:8888/v1/api"
         }
     ],
-    "host": "https://app-loja.azurewebsites.net/v1/api",
+    "host": "http://0.0.0.0:8888/v1/api",
     "schema": ["http"],
     "basePath": "/v1",
     "tags": [

@@ -1,4 +1,3 @@
-import bodyParser from "body-parser";
 import "../util/module-alias";
 import { Server } from "@overnightjs/core";
 import * as http from "http";
@@ -6,18 +5,19 @@ import { ProductController } from "@src/controllers/product";
 import { Application } from "express";
 import { apiHeaderHandle } from "@src/middlewares/header-handle";
 import cors from "cors";
-import swaggerUi = require("swagger-ui-express");
-import swaggerDocs = require("@src/docs/swagger.json");
-import fs = require("fs");
+import swaggerUi  from "swagger-ui-express";
+import swaggerDocs from "@src/docs/swagger.json";
+import fs from "fs";
 import { apiErrorHandle } from "@src/middlewares/error-handle";
 import { CategoryController } from "@src/controllers/category";
 import * as database from "@src/config/config";
-import morgan = require("morgan");
+import morgan  from "morgan";
 import logger from "@src/logger";
 import { UserController } from "@src/controllers/user";
 import { ProfileController } from "@src/controllers/profile";
-import { OrderController } from "../controllers/order";
-import { CashieController } from "../controllers/cashie";
+import { OrderController } from "@src/controllers/order";
+import { CashieController } from "@src/controllers/cashie";
+import bodyParser from "body-parser";
 
 /**
  * Configuração do express via Overnight
@@ -26,7 +26,7 @@ import { CashieController } from "../controllers/cashie";
 export class SetupServer extends Server {
   private server?: http.Server;
 
-  constructor(private port = 8080) {
+  constructor(private port = 8888) {
     super();
   }
 

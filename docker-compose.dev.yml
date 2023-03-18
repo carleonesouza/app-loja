@@ -1,0 +1,13 @@
+version: "3.4"
+
+services:
+  api:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/opt/app
+      - /opt/app/node_modules
+    ports:
+      - 8888:80
+    command: npm run dev
