@@ -1,8 +1,6 @@
-FROM node:16 as development
-
-RUN mkdir -p /opt/app
+FROM node:alpine as development
 # Create app directory
-WORKDIR /opt/app
+WORKDIR /usr/src/app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -18,5 +16,5 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 8888
-CMD [ "node", "dist/index.js ]
+EXPOSE 8080
+CMD [ "node", "dist/src/index.js" ]
