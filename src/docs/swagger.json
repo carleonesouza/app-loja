@@ -5,7 +5,7 @@
         "description": "Essa é a API de Controle de Caixa, que pode ser utilizada junto com a aplicação para controle de caixa de pequenos négocios",
         "termsOfService": "http://example.com/terms/",
         "contact": {
-            "name": "Suporte da API",
+            "name": "Suporte of API",
             "url": "http://www.example.com/support",
             "email": "carleonepsouza@gmail.com"
         },
@@ -17,10 +17,10 @@
     },
     "servers": [
         {
-            "url": "http://0.0.0.0:8080/v1/api"
+            "url": "https://app-loja.azurewebsites.net/v1/api"
         }
     ],
-    "host": "http://0.0.0.0:8080/v1/api",
+    "host": "https://app-loja.azurewebsites.net/v1/api",
     "schema": ["http"],
     "basePath": "/v1",
     "tags": [
