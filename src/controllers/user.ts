@@ -91,7 +91,7 @@ export class UserController extends UserMongoDbRepository {
               result.email,
               result.id as string
             );
-            res.status(201).send({ accessToken: token });
+            res.status(201).send({ accessToken: token , user: {name: result.fullName, email: result.email, id: result.id}});
           })
           .catch((error) => {
             res.status(500).send(error);
@@ -115,7 +115,7 @@ export class UserController extends UserMongoDbRepository {
                 user.email,
                 user.id as string
               );
-              res.status(200).send({ accessToken: token });
+              res.status(200).send({ accessToken: token, user: {name: user.fullName, email: user.email, id: user.id} });
             } else {
               throw new Error("Email or password invalid!");
             }
@@ -133,6 +133,7 @@ export class UserController extends UserMongoDbRepository {
       res.status(500).send(error).json();
     }
   }
+
 
   @Get("logout")
   private async logOut(req: Request, res: Response) {

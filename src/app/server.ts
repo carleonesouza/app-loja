@@ -18,6 +18,7 @@ import { ProfileController } from "@src/controllers/profile";
 import { OrderController } from "@src/controllers/order";
 import { CashieController } from "@src/controllers/cashie";
 import bodyParser from "body-parser";
+import { AssinaturaController } from "@src/controllers/assinatura";
 
 /**
  * Configuração do express via Overnight
@@ -67,6 +68,7 @@ export class SetupServer extends Server {
     const profileController = new ProfileController();
     const orderController = new OrderController();
     const cashieController = new CashieController();
+    const assinaturaController = new AssinaturaController();
     this.addControllers([
       productController,
       categoryController,
@@ -74,6 +76,7 @@ export class SetupServer extends Server {
       profileController,
       orderController,
       cashieController,
+      assinaturaController
     ]);
   }
 

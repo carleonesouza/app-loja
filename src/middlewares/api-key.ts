@@ -9,9 +9,11 @@ export async function apiKey(
   next: NextFunction
 ): Promise<void> {
   try {
-    const apiToken = generateApiKey(req?.body?.apiKey, req?.body.apiKey);
+    const apiToken = req?.body?.apikey
+    
     if (apiToken) {
       const claims = validateApiKey(apiToken);
+      console.log(claims);
       req.context = { apiKey: claims.key };
       next();
     } else {
@@ -35,5 +37,5 @@ export function generateApiKey(apiKey: string, email: string) {
 }
 
 export function validateApiKey(apiKey: string): JwtToken {
-  return jwt.verify(apiKey, baseUtil.JWT_KEY) as JwtToken;
+  return jwt.verify(apiKey, baseUtil.USER_KEY) as JwtToken;
 }

@@ -12,4 +12,8 @@ export default class AuthService {
   public static decodeToken(token: string): JwtToken {
     return jwt.verify(token, baseUtil.JWT_KEY) as JwtToken;
   }
+
+  public static generatePublicApiToken(email: string): string{
+    return  jwt.sign({ email: email }, baseUtil.USER_KEY);
+  }
 }
