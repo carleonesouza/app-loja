@@ -5,16 +5,14 @@ import {
 import { Request, Response } from "express";
 import logger from "@src/logger";
 import { AssinaturaMongoDbRepository } from "@src/repositories/assinaturaMongoDbRepository";
-import jwt from "jsonwebtoken";
-import baseUtil from "@src/util/baseUtil";
 import { Assinatura } from "@src/models/assinatura";
 import AuthService from "@src/services/auth";
 
 
-@Controller("v1/api/signature")
+@Controller("v1/api/users")
 export class AssinaturaController extends AssinaturaMongoDbRepository {
 
-    @Post("")
+    @Post("/signature")
     public async assinatura(req: Request, res: Response): Promise<void> {
         try {
             return await this.findAssinatura(req.body.email)
