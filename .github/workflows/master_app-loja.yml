@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_c1279af26ee441d1a704ca438c2ec8e6 }}/csouzap/app-loja-v1-1:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/csouzap/app-loja-v1-1:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'app-loja'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_df08f82242944c32bad37b852cebc408 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_c1279af26ee441d1a704ca438c2ec8e6 }}/csouzap/app-loja-v1-1:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.DOCKER_HUB_USERNAME  }}/csouzap/app-loja-v1-1:${{ github.sha }}'
