@@ -47,4 +47,4 @@ jobs:
         app-name: 'app-loja'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_df08f82242944c32bad37b852cebc408 }}
-        images: 'index.docker.io/${{ secrets.DOCKER_HUB_USERNAME  }}/csouzap/app-loja:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.DOCKER_HUB_USERNAME  }}/app-loja:${{ github.sha }}'
