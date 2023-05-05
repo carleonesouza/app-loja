@@ -7,16 +7,13 @@ export interface Order extends IOrder {
 
 const orderSchema = new mongoose.Schema(
   {
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
-    quantity: { type: Number, required: true },
+    
+    produtos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true }],
+    nvenda: { type: Number, required: true },
     total: { type: Number, required: true },
-    paymentMethod: { type: String, required: true },
-    change: { type: Number, required: false },
-    paymentValue: { type: String, required: true, unique: true },
+    formaPagamnto: { type: String, required: true },
+    troco: { type: Number, required: false },
+    valorPago: { type: String, required: true},
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     status: { type: Boolean, required: false },
   },
