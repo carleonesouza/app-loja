@@ -3,12 +3,12 @@ import { User } from "@src/models/user";
 
 export interface IOrder {
   id?: string;
-  product: Product;
-  quantity: number;
+  produtos: Array<Product>;
+  nvenda: number;
   total: number;
-  paymentMethod: string;
-  change: number;
-  paymentValue: number;
+  formaPagamnto: string;
+  troco: number;
+  valorPago: number;
   user: User;
   status: boolean;
 }

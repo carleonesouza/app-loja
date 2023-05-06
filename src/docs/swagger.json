@@ -1941,22 +1941,23 @@
             "Order": {
                 "type": "object",
                 "properties": {
-                    "quantity": {
+                    "nvenda": {
                         "type": "number"
                     },
                     "total": {
                         "type": "number"
                     },
-                    "paymentMethod": {
+                    "formaPagamnto": {
                         "type": "string"
                     },
-                    "change": {
+                    "troco": {
                         "type": "number"
                     },
-                    "paymentValue": {
+                    "valorPago": {
                         "type": "number"
                     },
-                    "product": {
+                    "produtos": {
+                        "type":"array",
                         "$ref": "#/components/schemas/Product"
                     },
                     "user": {
@@ -1970,18 +1971,21 @@
             "Cashie": {
                 "type": "object",
                 "properties": {
-                    "closeValue": {
+                    "valorFechamento": {
                         "type": "number"
                     },
-                    "openValue": {
+                    "valorAbertura": {
                         "type": "number"
                     },
-                    "closeDate": {
+                    "criadoEm": {
                         "type": "date"
                     },
-                    "sales": {
+                    "fechadoEm": {
+                        "type": "date"
+                    },
+                    "orders": {
                         "type": "array",
-                        "$ref": "#/components/schemas/Product"
+                        "$ref": "#/components/schemas/Order"
                     },
                     "user": {
                         "$ref": "#/components/schemas/User"
