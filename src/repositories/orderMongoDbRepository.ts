@@ -18,7 +18,7 @@ export class OrderMongoDbRepository
       const orders = await this.orderModel
         .find()
         .populate("product")
-        .populate("user")
+        .populate("user", "-password")
         .exec();
       return orders;
     } catch (error) {
@@ -44,7 +44,7 @@ export class OrderMongoDbRepository
       const data = await this.orderModel
         .findOne({ _id: orderId })
         .populate("product")
-        .populate("user")
+        .populate("user", "-password")
         .exec();
       return data as Order;
     } catch (error) {

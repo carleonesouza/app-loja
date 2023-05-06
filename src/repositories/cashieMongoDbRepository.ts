@@ -17,7 +17,7 @@ export class CashieMongoDbRepository
     try {
       const cashies = await this.cashieModel
         .find()
-        .populate("user")
+        .populate("user", "-password")
         .populate("orders")
         .exec();
       return cashies;
@@ -31,7 +31,7 @@ export class CashieMongoDbRepository
     try {
       const data = await this.cashieModel
         .findOne({ _id: cashieId })
-        .populate("user")
+        .populate("user", "-password")
         .populate("orders")
         .exec();
       return data as Cashie;
@@ -45,7 +45,7 @@ export class CashieMongoDbRepository
     try {
       const data = await this.cashieModel
         .findOne({ user: userId })
-        .populate("user")
+        .populate("user", "-password")
         .populate("orders")
         .exec();
       return data as Cashie;
