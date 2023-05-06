@@ -7,11 +7,11 @@ export interface Cashie extends ICashie {
 
 const cashieSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
     valorAbertura: { type: Number, required: true },
     valorFechamento: { type: Number },
-    criadoEm: { type: String, required: true },
+    criadoEm: { type: Date, default: Date.now, required: true, unique: true},
     fechadoEm: { type: Date },
     status: { type: Boolean, required: false },
   },

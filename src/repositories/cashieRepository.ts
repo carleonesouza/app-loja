@@ -3,6 +3,6 @@ import { BaseRepository } from "@src/repositories/base";
 
 export interface CashieRepository extends BaseRepository<Cashie> {
   findCashieById(saleId: string): Promise<Cashie>;
-  findCashieByDay(day: string): Promise<Cashie>;
+  findCashieByDay(userId: string): Promise<Cashie>;
   findAllCashie(): Promise<Cashie[]>;
 }

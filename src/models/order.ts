@@ -14,7 +14,7 @@ const orderSchema = new mongoose.Schema(
     formaPagamnto: { type: String, required: true },
     troco: { type: Number, required: false },
     valorPago: { type: String, required: true},
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
     status: { type: Boolean, required: false },
   },
   {

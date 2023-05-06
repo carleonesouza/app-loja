@@ -41,10 +41,10 @@ export class CashieMongoDbRepository
     }
   }
 
-  async findCashieByDay(day: string): Promise<Cashie> {
+  async findCashieByDay(userId: string): Promise<Cashie> {
     try {
       const data = await this.cashieModel
-        .findOne({ criadoEm: day })
+        .findOne({ user: userId })
         .populate("user")
         .populate("orders")
         .exec();
