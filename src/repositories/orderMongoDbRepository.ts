@@ -27,25 +27,10 @@ export class OrderMongoDbRepository
     }
   }
 
-  public async updateOrderById(
-    orderId: string,
-    order: Order
-  ): Promise<unknown> {
+  public async updateOrderById(orderId: string, order: Order): Promise<unknown> {
     try {
       const data = await this.orderModel.updateOne(
         { _id: orderId },
-        {
-          $set: {
-            product: order.product,
-            quantity: order.quantity,
-            total: order.total,
-            paymentMethod: order.paymentMethod,
-            change: order.change,
-            paymentValue: order.paymentValue,
-            user: order.user,
-            status: order.status,
-          },
-        }
       );
       return data;
     } catch (error) {
