@@ -39,7 +39,7 @@ export class CashieController extends CashieMongoDbRepository {
   @Get('user/:id')
   public async getCashieByDay(req: Request, res: Response) {
     try {
-      const cashie = await this.findCashieByDay(req.params.user);
+      const cashie = await this.findCashieByDay(req.params.id);
       res.status(200).send(cashie);
     } catch (error) {
       res.status(500).send(error);
