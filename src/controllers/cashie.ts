@@ -36,6 +36,17 @@ export class CashieController extends CashieMongoDbRepository {
     }
   }
 
+  @Get(":day")
+  public async getCashieByDay(req: Request, res: Response) {
+    try {
+      const cashie = await this.findCashieByDay( req.params.day );
+      res.status(200).send(cashie);
+    } catch (error) {
+      res.status(500).send(error);
+      logger.error(error);
+    }
+  }
+
   @Post()
   public async createCashie(req: Request, res: Response): Promise<void> {
     try {

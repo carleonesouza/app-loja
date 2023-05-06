@@ -1366,12 +1366,15 @@
                             "examples": {
                                 "sale": {
                                     "value": {
-                                        "product": "6408d68ba95c3183f872fe23",
-                                        "quantity": 3,
+                                        "produtos": {
+                                            "type":"array",
+                                            "$ref":"#/components/schemas/Product"
+                                        },
+                                        "nvenda": 3,
                                         "total": 24.0,
-                                        "paymentMethod": "Credito",
-                                        "change": 0,
-                                        "paymentValue": 24.0,
+                                        "formaPagamnto": "Credito",
+                                        "troco": 0,
+                                        "valorPago": 24.0,
                                         "user": "640a0d0a9b99632ae8b84ab0",
                                         "status": true
                                     }
@@ -1651,14 +1654,19 @@
                                 "cashie": {
                                     "value": {
                                         "user": "640a0d0a9b99632ae8b84ab0",
-                                        "sales": [
-                                            {
-                                                "sale": "640a277798604a8b3b7ea5f6"
-                                            }
-                                        ],
-                                        "openValue": 50.0,
+                                        "orders": {
+                                            "type":"array",
+                                            "$ref":"#/components/schemas/Order"
+                                        },
+                                        "valorAbertura": 50.0,
+                                        "valorFechamento":50.0,
                                         "status": true,
-                                        "closeValue": 250.0
+                                        "criadoEm":{
+                                            "type":"date"
+                                        },
+                                        "fechadoEm": {
+                                            "type":"date"
+                                        }
                                     }
                                 }
                             }

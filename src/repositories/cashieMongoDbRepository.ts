@@ -12,7 +12,7 @@ export class CashieMongoDbRepository
   constructor(cashieModel = Cashie) {
     super(cashieModel);
   }
-
+ 
   public async findAllCashie(): Promise<Cashie[]> {
     try {
       const cashies = await this.cashieModel
@@ -31,6 +31,20 @@ export class CashieMongoDbRepository
     try {
       const data = await this.cashieModel
         .findOne({ _id: cashieId })
+        .populate("user")
+        .populate("orders")
+        .exec();
+      return data as Cashie;
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+  }
+
+  async findCashieByDay(day: string): Promise<Cashie> {
+    try {
+      const data = await this.cashieModel
+        .findOne({ criadoEm: day })
         .populate("user")
         .populate("orders")
         .exec();
