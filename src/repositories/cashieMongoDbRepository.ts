@@ -57,7 +57,6 @@ export class CashieMongoDbRepository
 
   public async findCashieByDay(userId: string): Promise<Cashie> {
     const today = moment().format('L'); 
-    console.log(today);
     try {
       const data = await this.cashieModel
         .findOne({ user: userId, criadoEm: today})
