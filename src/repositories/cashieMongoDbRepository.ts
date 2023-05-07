@@ -2,8 +2,6 @@ import { DbMongooseRepository } from "@src/repositories/dbRepository";
 import logger from "@src/logger";
 import { Cashie } from "@src/models/cashie";
 import { CashieRepository } from "@src/repositories/cashieRepository";
-import moment from 'moment';
-moment.locale('pt-br')
 
 export class CashieMongoDbRepository
   extends DbMongooseRepository<Cashie>
@@ -55,11 +53,10 @@ export class CashieMongoDbRepository
 
   }
 
-  public async findCashieByDay(userId: string): Promise<Cashie> {
-    const today = moment().format('L'); 
+  public async findCashieByDay(userId: string, date: string): Promise<Cashie> {
     try {
       const data = await this.cashieModel
-        .findOne({ user: userId, criadoEm: today})
+        .findOne({ user: userId, criadoEm: date })
         .populate("user", "-password")
         .populate("orders")
         .exec();

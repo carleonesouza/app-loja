@@ -39,8 +39,9 @@ export class CashieController extends CashieMongoDbRepository {
 
   @Get('user/:id')
   private async getCashieByDay(req: Request, res: Response) {
+    console.log(req.params);
     try {
-      const cashie = await this.findCashieByDay(req.params.id);
+      const cashie = await this.findCashieByDay(req.params.id, req.params.date);
       if(cashie == null || cashie == undefined){
         res.status(404).json({message:'It does not exist cashie open for today!'});
         return;

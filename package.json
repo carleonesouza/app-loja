@@ -26,7 +26,6 @@
     "express-pino-logger": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
     "module-alias": "^2.2.2",
-    "moment": "^2.29.4",
     "mongoose": "^6.8.4",
     "nodemon": "^2.0.20",
     "swagger-jsdoc": "^6.2.8",
