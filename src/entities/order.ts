@@ -6,7 +6,7 @@ export interface IOrder {
   produtos: Array<Product>;
   nvenda: number;
   total: number;
-  formaPagamnto: string;
+  formaPagamento: string;
   troco: number;
   valorPago: number;
   user: User;

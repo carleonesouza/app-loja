@@ -5,14 +5,13 @@ import { CashieRepository } from "@src/repositories/cashieRepository";
 
 export class CashieMongoDbRepository
   extends DbMongooseRepository<Cashie>
-  implements CashieRepository
-{
+  implements CashieRepository {
   private cashieModel = Cashie;
 
   constructor(cashieModel = Cashie) {
     super(cashieModel);
   }
- 
+
   public async findAllCashie(): Promise<Cashie[]> {
     try {
       const cashies = await this.cashieModel
@@ -41,7 +40,20 @@ export class CashieMongoDbRepository
     }
   }
 
-  async findCashieByDay(userId: string): Promise<Cashie> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async addOrderToCashie(cashie: Cashie): Promise<Cashie> {
+    try {
+      const updatedCashie = await this.cashieModel.findOneAndUpdate({ _id: cashie.id },
+        { $push: { orders: cashie.orders[0] } })
+      return updatedCashie as Cashie;
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+
+  }
+
+  public async findCashieByDay(userId: string): Promise<Cashie> {
     try {
       const data = await this.cashieModel
         .findOne({ user: userId })

@@ -115,7 +115,7 @@ export class UserController extends UserMongoDbRepository {
                 user.email,
                 user.id as string
               );
-              res.status(200).send({ accessToken: token, user: {name: user.fullName, email: user.email, id: user.id} });
+              res.status(200).send({ accessToken: token, user: {name: user.fullName, email: user.email, _id: user.id} });
             } else {
               throw new Error("Email or password invalid!");
             }
