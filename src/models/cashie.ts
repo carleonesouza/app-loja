@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { ICashie } from "../entities/cashie";
+import moment from 'moment';
+moment.locale('pt-br')
 
 export interface Cashie extends ICashie {
   id?: string;
@@ -11,7 +13,7 @@ const cashieSchema = new mongoose.Schema(
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
     valorAbertura: { type: Number, required: true },
     valorFechamento: { type: Number },
-    criadoEm: { type: Date, default: Date.now, required: true, unique: true},
+    criadoEm: { type: Date, default: moment().format('L'), required: true, unique: true},
     fechadoEm: { type: Date },
     status: { type: Boolean, required: false },
   },
