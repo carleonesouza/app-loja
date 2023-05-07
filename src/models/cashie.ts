@@ -11,8 +11,8 @@ const cashieSchema = new mongoose.Schema(
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
     valorAbertura: { type: Number, required: true },
     valorFechamento: { type: Number },
-    criadoEm: { type: Date, required: true, unique: true},
-    fechadoEm: { type: Date },
+    criadoEm: { type: String, required: true, unique: true},
+    fechadoEm: { type: String },
     status: { type: Boolean, required: false },
   },
   {
