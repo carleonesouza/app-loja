@@ -57,7 +57,7 @@ export class CashieController extends CashieMongoDbRepository {
     try {
       const cashie = new Cashie(req.body);
       await this.create(cashie);
-      res.status(201).send({ message: "The Cashie has been created successfully!", cashie });
+      res.status(201).send(cashie);
     } catch (error) {
       res.status(500).send({ message: error });
       logger.error(error);
@@ -68,7 +68,7 @@ export class CashieController extends CashieMongoDbRepository {
   private async update(req: Request, res: Response): Promise<void> {
     try {      
       const result = await this.addOrderToCashie(req.body, req.params.id);
-      res.status(201).send({ message: "The Cashie has been updated successfully!", result });
+      res.status(201).send(result);
     } catch (error) {
       res.status(500).send({ message: error });
       logger.error(error);

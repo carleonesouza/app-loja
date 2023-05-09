@@ -44,7 +44,7 @@ export class OrderController extends OrderMongoDbRepository {
       await this.updateOrderById(req.params.id, order);
       res
         .status(200)
-        .send({ message: "The Order has been successfully updated!", order });
+        .send(order);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -58,7 +58,7 @@ export class OrderController extends OrderMongoDbRepository {
       await this.create(order);
       res
         .status(201)
-        .send({ message: "The Order has been created successfully!", order });
+        .send(order);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
