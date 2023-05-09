@@ -41,10 +41,10 @@ export class CashieMongoDbRepository
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async addOrderToCashie(cashie: Cashie): Promise<Cashie> {
+  public async addOrderToCashie(order: any, id: string): Promise<Cashie> {
     try {
-      const updatedCashie = await this.cashieModel.findOneAndUpdate({ _id: cashie.id },
-        { $push: { orders: cashie.orders[0] } })
+      const updatedCashie = await this.cashieModel.findOneAndUpdate({ _id: id },
+        { $push: { orders: order } })
       return updatedCashie as Cashie;
     } catch (error) {
       logger.error(error);

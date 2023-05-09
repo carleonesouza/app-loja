@@ -67,7 +67,7 @@ export class CashieController extends CashieMongoDbRepository {
   @Put(':id')
   private async update(req: Request, res: Response): Promise<void> {
     try {      
-      const result = await this.addOrderToCashie(req.body);
+      const result = await this.addOrderToCashie(req.body, req.params.id);
       res.status(201).send({ message: "The Cashie has been updated successfully!", result });
     } catch (error) {
       res.status(500).send({ message: error });
