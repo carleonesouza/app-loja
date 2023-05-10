@@ -37,8 +37,23 @@ export class CashieController extends CashieMongoDbRepository {
     }
   }
 
-  @Post('user/:id')
+  @Post('day/:id')
   private async getCashieByDay(req: Request, res: Response) {
+    try {
+      const cashie = await this.findCashieByDay(req.params.id, req.body.date);
+      if(cashie == null || cashie == undefined){
+        res.status(404).json({message:'It does not exist cashie open for today!'});
+        return;
+      }
+      res.status(200).send(cashie);
+    } catch (error) {
+      res.status(500).send(error);
+      logger.error(error);
+    }
+  }
+
+  @Post('yesterday/:id')
+  private async getCashieYesterday(req: Request, res: Response) {
     try {
       const cashie = await this.findCashieByDay(req.params.id, req.body.date);
       if(cashie == null || cashie == undefined){
@@ -68,6 +83,18 @@ export class CashieController extends CashieMongoDbRepository {
   private async update(req: Request, res: Response): Promise<void> {
     try {      
       const result = await this.addOrderToCashie(req.body, req.params.id);
+      res.status(201).send(result);
+    } catch (error) {
+      res.status(500).send({ message: error });
+      logger.error(error);
+    }
+  }
+
+
+  @Put('close/:id')
+  private async closeCashie(req: Request, res: Response): Promise<void> {
+    try {      
+      const result = await this.closeCashieOfDay(req.body, req.params.id);
       res.status(201).send(result);
     } catch (error) {
       res.status(500).send({ message: error });
