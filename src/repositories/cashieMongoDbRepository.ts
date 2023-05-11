@@ -69,10 +69,11 @@ export class CashieMongoDbRepository
 
   public async closeCashieOfDay(cashie: Cashie, id: string){
     try {
-      const updatedCashie = await this.cashieModel.findOneAndUpdate({ _id: id },
+      const updatedCashie = await this.cashieModel.updateOne({ _id: id },
         { $set: { fechadoEm: cashie.fechadoEm,
-                  valorFechamento: cashie.valorFechamento } })
-      return updatedCashie as Cashie;
+                  valorFechamento: cashie.valorFechamento,
+                  status: cashie.status } })
+      return updatedCashie;
     } catch (error) {
       logger.error(error);
       this.handleError(error);
