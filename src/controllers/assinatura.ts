@@ -9,10 +9,10 @@ import { Assinatura } from "@src/models/assinatura";
 import AuthService from "@src/services/auth";
 
 
-@Controller("v1/api/users")
+@Controller("v1/api/signature")
 export class AssinaturaController extends AssinaturaMongoDbRepository {
 
-    @Post("signature")
+    @Post()
     public async assinatura(req: Request, res: Response): Promise<void> {
         try {
             return await this.findAssinatura(req.body.email)
