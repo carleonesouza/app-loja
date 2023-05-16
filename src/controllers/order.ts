@@ -38,7 +38,7 @@ export class OrderController extends OrderMongoDbRepository {
   }
 
   @Put(":id")
-  private async update(req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     try {
       const order = new Order(req.body);
       await this.updateOrderById(req.params.id, order);
@@ -66,7 +66,7 @@ export class OrderController extends OrderMongoDbRepository {
   }
 
   @Delete(":id")
-  private async delete(req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id });
     res.status(200).json({ message: "Order was deleted successfully!" });
   }

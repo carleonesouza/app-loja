@@ -16,7 +16,7 @@ import { authMiddleware } from "@src/middlewares/auth";
 @ClassMiddleware(authMiddleware)
 export class CashieController extends CashieMongoDbRepository {
   @Get()
-  private async getCashie(req: Request, res: Response): Promise<void> {
+  public async getCashie(req: Request, res: Response): Promise<void> {
     try {
       const cashies = await this.findAllCashie();
       res.status(200).send(cashies);
@@ -27,7 +27,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Get(":id")
-  private async getCashieById(req: Request, res: Response) {
+  public async getCashieById(req: Request, res: Response) {
     try {
       const cashie = await this.findOne({ _id: req.params.id });
       res.status(200).send(cashie);
@@ -38,7 +38,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Post('day/:id')
-  private async getCashieByDay(req: Request, res: Response) {
+  public async getCashieByDay(req: Request, res: Response) {
     try {
       const cashie = await this.findCashieByDay(req.params.id, req.body.date);
       if(cashie == null || cashie == undefined){
@@ -53,7 +53,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Post('yesterday/:id')
-  private async getCashieYesterday(req: Request, res: Response) {
+  public async getCashieYesterday(req: Request, res: Response) {
     try {
       const cashie = await this.findCashieByDay(req.params.id, req.body.date);
       if(cashie == null || cashie == undefined){
@@ -68,7 +68,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Post()
-  private async createCashie(req: Request, res: Response): Promise<void> {
+  public async createCashie(req: Request, res: Response): Promise<void> {
     try {
       const cashie = new Cashie(req.body);
       await this.create(cashie);
@@ -80,7 +80,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Put(':id')
-  private async update(req: Request, res: Response): Promise<void> {
+  public async update(req: Request, res: Response): Promise<void> {
     try {      
       const result = await this.addOrderToCashie(req.body, req.params.id);
       res.status(201).send(result);
@@ -92,7 +92,7 @@ export class CashieController extends CashieMongoDbRepository {
 
 
   @Put('close/:id')
-  private async closeCashie(req: Request, res: Response): Promise<void> {
+  public async closeCashie(req: Request, res: Response): Promise<void> {
     try {      
       const result = await this.closeCashieOfDay(req.body, req.params.id);
       res.status(201).send(result);
@@ -103,7 +103,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Delete(":id")
-  private async delete(req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id });
     res.status(200).json({ message: "Cashie deleted successfully!" });
   }
