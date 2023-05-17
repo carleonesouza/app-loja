@@ -91,7 +91,7 @@ export class UserController extends UserMongoDbRepository {
               result.email,
               result.id as string
             );
-            res.status(201).send({ accessToken: token , user: {name: result.fullName, email: result.email, id: result.id}});
+            res.status(201).send({ accessToken: token , user: {name: result.fullName, email: result.email, _id: result.id}});
           })
           .catch((error) => {
             res.status(500).send(error);
