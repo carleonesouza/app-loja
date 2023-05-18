@@ -13,7 +13,6 @@ export async function apiKey(
     
     if (apiToken) {
       const claims = validateApiKey(apiToken);
-      console.log(claims);
       req.context = { apiKey: claims.key };
       next();
     } else {

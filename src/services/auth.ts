@@ -14,6 +14,8 @@ export default class AuthService {
   }
 
   public static generatePublicApiToken(email: string): string{
-    return  jwt.sign({ email: email }, baseUtil.USER_KEY);
+    return  jwt.sign({ email: email }, baseUtil.USER_KEY, {
+      expiresIn: '1h'
+    });
   }
 }
