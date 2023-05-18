@@ -18,9 +18,9 @@ import AuthService from "@src/services/auth";
 export class UserController extends UserMongoDbRepository {
   @Get()
   @Middleware(authMiddleware)
-  public async getUser(req: Request, res: Response): Promise<void> {
+  public async getUsers(req: Request, res: Response): Promise<void> {
     try {
-      const users = await this.find({});
+      const users = await this.findAllusers();
       res.status(200).send(users);
     } catch (error) {
       res.status(500).send(error);
@@ -91,7 +91,7 @@ export class UserController extends UserMongoDbRepository {
               result.email,
               result.id as string
             );
-            res.status(201).send({ accessToken: token , user: {name: result.fullName, email: result.email, _id: result.id}});
+            res.status(201).send({ accessToken: token , user: {name: result.fullName, email: result.email, _id: result.id, apiKey: result.apiKey }});
           })
           .catch((error) => {
             res.status(500).send(error);
@@ -115,7 +115,7 @@ export class UserController extends UserMongoDbRepository {
                 user.email,
                 user.id as string
               );
-              res.status(200).send({ accessToken: token, user: {name: user.fullName, email: user.email, _id: user.id} });
+              res.status(200).send({ accessToken: token , user: {name: user.fullName, email: user.email, _id: user.id, apiKey: user.apiKey }});
             } else {
               throw new Error("Email or password invalid!");
             }

@@ -13,6 +13,17 @@ export class UserMongoDbRepository
   constructor(userModel = User) {
     super(userModel);
   }
+  findAllusers(): Promise<User[]> {
+    try {
+      return this.userModel
+        .find()
+        .populate("profiles")
+        .exec();
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+  }
 
   public logout() {
     return "";
