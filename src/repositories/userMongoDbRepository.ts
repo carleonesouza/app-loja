@@ -22,6 +22,8 @@ export class UserMongoDbRepository
     try {
       return this.userModel
         .findOne({ email: email })
+        .populate("profiles")
+        .exec()
         .then((user) => {
           return validatePassword(password, user?.password as string);
         })
@@ -76,7 +78,9 @@ export class UserMongoDbRepository
 
   public async findUserById(userId: string): Promise<User> {
     try {
-      const data = await this.findOne({ _id: userId });
+      const data = await this.userModel.findOne({ _id: userId })
+      .populate("profiles")
+      .exec();
       return data as User;
     } catch (error) {
       logger.error(error);
@@ -86,7 +90,9 @@ export class UserMongoDbRepository
 
   public async findUserByEmail(email: string): Promise<User> {
     try {
-      const data = await this.userModel.findOne({ email: email });
+      const data = await this.userModel.findOne({ email: email })
+      .populate("profiles")
+      .exec();
       return data as User;
     } catch (error) {
       logger.error(error);
