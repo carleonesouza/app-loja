@@ -9,8 +9,7 @@ export async function apiKey(
   next: NextFunction
 ): Promise<void> {
   try {
-    const apiToken = req?.body?.apikey
-    
+    const apiToken = req?.body?.apiKey
     if (apiToken) {
       const claims = validateApiKey(apiToken);
       req.context = { apiKey: claims.key };
