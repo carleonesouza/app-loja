@@ -4,18 +4,21 @@ import {
   Put,
   Delete,
   Post,
-  ClassMiddleware,
+  Middleware,
 } from "@overnightjs/core";
 import { Request, Response } from "express";
 import logger from "@src/logger";
 import { OrderMongoDbRepository } from "@src/repositories/orderMongoDbRepository";
 import { Order } from "@src/models/order";
 import { authMiddleware } from "@src/middlewares/auth";
+import { userAuthMiddleware } from "@src/middlewares/user-auth";
+import ProdctService from "@src/services/product";
 
 @Controller("v1/api/orders")
-@ClassMiddleware(authMiddleware)
 export class OrderController extends OrderMongoDbRepository {
+
   @Get()
+  @Middleware([authMiddleware])
   public async getOrders(req: Request, res: Response): Promise<void> {
     try {
       const orders = await this.findAllOrders();
@@ -27,9 +30,10 @@ export class OrderController extends OrderMongoDbRepository {
   }
 
   @Get(":id")
-  public async getgetOrderById(req: Request, res: Response) {
+  @Middleware([authMiddleware])
+  public async getOrderById(req: Request, res: Response) {
     try {
-      const order = await this.findOne({ _id: req.params.id });
+      const order = await this.findOrderById(req.params.id);
       res.status(200).send(order);
     } catch (error) {
       res.status(500).send(error);
@@ -38,13 +42,12 @@ export class OrderController extends OrderMongoDbRepository {
   }
 
   @Put(":id")
+  @Middleware([userAuthMiddleware, authMiddleware])
   public async update(req: Request, res: Response) {
     try {
       const order = new Order(req.body);
       await this.updateOrderById(req.params.id, order);
-      res
-        .status(200)
-        .send(order);
+      res.status(200).send(order);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -52,13 +55,18 @@ export class OrderController extends OrderMongoDbRepository {
   }
 
   @Post()
+  @Middleware([authMiddleware])
   public async createOrder(req: Request, res: Response): Promise<void> {
     try {
+      const servicepdt = new ProdctService();
       const order = new Order(req.body);
+      if (order.produtos.length > 0) {
+        order.produtos.forEach(async (pdt) => {
+          await servicepdt.updateQuantity(pdt);
+        })
+      }
       await this.create(order);
-      res
-        .status(201)
-        .send(order);
+      res.status(201).send(order);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -66,6 +74,7 @@ export class OrderController extends OrderMongoDbRepository {
   }
 
   @Delete(":id")
+  @Middleware([userAuthMiddleware, authMiddleware])
   public async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id });
     res.status(200).json({ message: "Order was deleted successfully!" });

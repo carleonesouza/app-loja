@@ -5,17 +5,21 @@ import {
   Delete,
   Post,
   ClassMiddleware,
+  Middleware,
 } from "@overnightjs/core";
 import { Request, Response } from "express";
 import logger from "@src/logger";
 import { ProfileMongoDbRepository } from "@src/repositories/profileMongoDbRepository";
 import { Profile } from "@src/models/profile";
 import { authMiddleware } from "@src/middlewares/auth";
+import { userAuthMiddleware } from "@src/middlewares/user-auth";
 
 @Controller("v1/api/profiles")
 @ClassMiddleware(authMiddleware)
 export class ProfileController extends ProfileMongoDbRepository {
+
   @Get()
+  @Middleware([authMiddleware])
   public async getProfile(req: Request, res: Response): Promise<void> {
     try {
       const profiles = await this.find({});
@@ -27,6 +31,7 @@ export class ProfileController extends ProfileMongoDbRepository {
   }
 
   @Get(":id")
+  @Middleware([authMiddleware])
   public async getProfileById(req: Request, res: Response) {
     try {
       const profile = await this.findOne({ _id: req.params.id });
@@ -38,6 +43,7 @@ export class ProfileController extends ProfileMongoDbRepository {
   }
 
   @Put(":id")
+  @Middleware([userAuthMiddleware, authMiddleware])
   private async update(req: Request, res: Response) {
     try {
       const profile = new Profile(req.body);
@@ -53,7 +59,7 @@ export class ProfileController extends ProfileMongoDbRepository {
   }
 
   @Post()
-  public async createProfile(req: Request, res: Response): Promise<void> {
+    public async createProfile(req: Request, res: Response): Promise<void> {
     try {
       const existProfile = this.findProfileByName(req.body.name);
       if (await existProfile) {
@@ -74,6 +80,7 @@ export class ProfileController extends ProfileMongoDbRepository {
   }
 
   @Delete(":id")
+  @Middleware([userAuthMiddleware, authMiddleware])
   private async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id });
     res.status(200).json({ message: "Profile was deleted successfully!" });

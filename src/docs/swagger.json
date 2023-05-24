@@ -1,19 +1,17 @@
 {
-    "openapi": "3.0.0",
+    "swagger": "2.0",
     "info": {
-        "title": "Controle de Caixa API",
         "description": "Essa é a API de Controle de Caixa, que pode ser utilizada junto com a aplicação para controle de caixa de pequenos négocios",
+        "version": "1.0.1",
+        "title": "Controle de Caixa API",
         "termsOfService": "http://example.com/terms/",
         "contact": {
-            "name": "Suporte of API",
-            "url": "http://www.example.com/support",
             "email": "carleonepsouza@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
             "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
-        },
-        "version": "1.0.1"
+        }
     },
     "servers": [
         {

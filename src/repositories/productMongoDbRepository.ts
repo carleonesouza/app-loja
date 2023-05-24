@@ -5,8 +5,7 @@ import logger from "@src/logger";
 
 export class ProductMongoDbRepository
   extends DbMongooseRepository<Product>
-  implements ProductRepository
-{
+  implements ProductRepository {
   private productModel = Product;
 
   constructor(productModel = Product) {
@@ -51,7 +50,6 @@ export class ProductMongoDbRepository
 
   public async findProductById(productId: string): Promise<Product> {
     try {
-      console.log(productId);
       const data = await this.productModel
         .findOne({ _id: productId })
         .populate("category");

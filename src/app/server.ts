@@ -5,9 +5,7 @@ import { ProductController } from "@src/controllers/product";
 import { Application } from "express";
 import { apiHeaderHandle } from "@src/middlewares/header-handle";
 import cors from "cors";
-import swaggerUi  from "swagger-ui-express";
-import swaggerDocs from "@src/docs/swagger.json";
-import fs from "fs";
+import swaggerDocs = require("../docs/swagger.json");
 import { apiErrorHandle } from "@src/middlewares/error-handle";
 import { CategoryController } from "@src/controllers/category";
 import * as database from "@src/config/config";
@@ -84,16 +82,13 @@ export class SetupServer extends Server {
     this.app.use(apiHeaderHandle);
   }
 
-  private setDocs(): void {
-    const customCss: string = fs.readFileSync(
-      process.cwd() + "/src/docs/swagger.css",
-      "utf8"
-    );
-    this.app.use(
-      "/api-docs",
-      swaggerUi.serve,
-      swaggerUi.setup(swaggerDocs, undefined, undefined, customCss)
-    );
+
+
+  private async setDocs(): Promise<void> {
+  this.app.get('/api-docs',  (req, res) => {
+    res.header("Content-Type",'application/json');
+    res.send(JSON.stringify(swaggerDocs));
+  })
   }
 
   private setupErrorHandlers(): void {

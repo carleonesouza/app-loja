@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Delete,
-  ClassMiddleware,
+  Middleware,
   Put,
 } from "@overnightjs/core";
 import { Request, Response } from "express";
@@ -11,11 +11,13 @@ import logger from "@src/logger";
 import { CashieMongoDbRepository } from "@src/repositories/cashieMongoDbRepository";
 import { Cashie } from "@src/models/cashie";
 import { authMiddleware } from "@src/middlewares/auth";
+import { userAuthMiddleware } from "@src/middlewares/user-auth";
 
 @Controller("v1/api/cashies")
-@ClassMiddleware(authMiddleware)
 export class CashieController extends CashieMongoDbRepository {
+  
   @Get()
+  @Middleware([authMiddleware])
   public async getCashie(req: Request, res: Response): Promise<void> {
     try {
       const cashies = await this.findAllCashie();
@@ -27,6 +29,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Get(":id")
+  @Middleware([authMiddleware])
   public async getCashieById(req: Request, res: Response) {
     try {
       const cashie = await this.findOne({ _id: req.params.id });
@@ -38,6 +41,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Post('day/:id')
+  @Middleware([authMiddleware])
   public async getCashieByDay(req: Request, res: Response) {
     try {
       const cashie = await this.findCashieByDay(req.params.id, req.body.date);
@@ -53,6 +57,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Post('yesterday/:id')
+  @Middleware([authMiddleware])
   public async getCashieYesterday(req: Request, res: Response) {
     try {
       const cashie = await this.findCashieByDay(req.params.id, req.body.date);
@@ -68,6 +73,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Post()
+  @Middleware([authMiddleware])
   public async createCashie(req: Request, res: Response): Promise<void> {
     try {
       const cashie = new Cashie(req.body);
@@ -80,6 +86,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Put(':id')
+  @Middleware([authMiddleware])
   public async update(req: Request, res: Response): Promise<void> {
     try {      
       const result = await this.addOrderToCashie(req.body, req.params.id);
@@ -92,6 +99,7 @@ export class CashieController extends CashieMongoDbRepository {
 
 
   @Put('close/:id')
+  @Middleware([authMiddleware])
   public async closeCashie(req: Request, res: Response): Promise<void> {
     try {      
       const result = await this.closeCashieOfDay(req.body, req.params.id);
@@ -103,6 +111,7 @@ export class CashieController extends CashieMongoDbRepository {
   }
 
   @Delete(":id")
+  @Middleware([userAuthMiddleware, authMiddleware])
   public async delete(req: Request, res: Response) {
     await this.deleteOne({ _id: req.params.id });
     res.status(200).json({ message: "Cashie deleted successfully!" });

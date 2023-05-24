@@ -13,14 +13,16 @@ import { User } from "@src/models/user";
 import { authMiddleware } from "@src/middlewares/auth";
 import { apiKey } from "@src/middlewares/api-key";
 import AuthService from "@src/services/auth";
+import { userAuthMiddleware } from "@src/middlewares/user-auth";
 
 @Controller("v1/api/users")
 export class UserController extends UserMongoDbRepository {
-  @Get()
-  @Middleware(authMiddleware)
+  
+  @Get('group/:apiKey')
+  @Middleware([authMiddleware])
   public async getUsers(req: Request, res: Response): Promise<void> {
     try {
-      const users = await this.findAllusers();
+      const users = await this.findAllusers(req.params.apiKey);
       res.status(200).send(users);
     } catch (error) {
       res.status(500).send(error);
@@ -29,10 +31,10 @@ export class UserController extends UserMongoDbRepository {
   }
 
   @Get(":id")
-  @Middleware(authMiddleware)
+  @Middleware([authMiddleware])
   public async getUserById(req: Request, res: Response) {
     try {
-      const user = await this.findOne({ _id: req.params.id });
+      const user = await this.findUserById(req.params.id);
       res.status(200).send(user);
     } catch (error) {
       res.status(500).send(error);
@@ -41,7 +43,7 @@ export class UserController extends UserMongoDbRepository {
   }
 
   @Put(":id")
-  @Middleware(authMiddleware)
+  @Middleware([userAuthMiddleware, authMiddleware])
   private async update(req: Request, res: Response) {
     try {
       const user = new User(req.body);
@@ -55,20 +57,34 @@ export class UserController extends UserMongoDbRepository {
     }
   }
 
-  @Post()
-  @Middleware(authMiddleware)
-  public async createUser(req: Request, res: Response): Promise<void> {
+  
+  @Put("reset-pwd/:id")
+  @Middleware([userAuthMiddleware, authMiddleware])
+  private async updatePwd(req: Request, res: Response) {
     try {
-      const existUser = this.findUserByEmail(req.body.email);
-      if (await existUser) {
+      const user = new User(req.body);
+      await this.updateUserPwd(req.params.id, user);
+      res
+        .status(200)
+        .send({ message: "Password has been successfully updated!", user });
+    } catch (error) {
+      res.status(500).send(error);
+      logger.error(error);
+    }
+  }
+
+  @Post('create-user/:id')
+  @Middleware([userAuthMiddleware, authMiddleware])
+  public async createUser(req: Request, res: Response): Promise<void> {
+
+    try {
+      const existUser = await this.findUserByEmail(req.body.email);
+      if (existUser) {
         res.status(409).send({ message: "User Already exists!" });
       } else {
         const user = new User(req.body);
-
         await this.create(user);
-        res
-          .status(201)
-          .send({ message: "The User has been created successfully!", user });
+        res.status(201).send({ message: "The User has been created successfully!", user });
       }
     } catch (error) {
       res.status(500).send(error);
@@ -80,8 +96,8 @@ export class UserController extends UserMongoDbRepository {
   @Middleware(apiKey)
   public async registerUser(req: Request, res: Response): Promise<void> {
     try {
-      const existUser = this.findUserByEmail(req.body.email);
-      if (await existUser) {
+      const existUser =  await this.findUserByEmail(req.body.email);
+      if (existUser) {
         res.status(409).send({ message: "User Already exists!" });
       } else {
         const user = new User(req.body);
@@ -91,7 +107,7 @@ export class UserController extends UserMongoDbRepository {
               result.email,
               result.id as string
             );
-            res.status(201).send({ accessToken: token , user: {name: result.fullName, email: result.email, _id: result.id, apiKey: result.apiKey }});
+            res.status(201).send({ accessToken: token , user: {name: result.fullName, email: result.email, _id: result.id, profile: result.profile }});
           })
           .catch((error) => {
             res.status(500).send(error);
@@ -115,7 +131,7 @@ export class UserController extends UserMongoDbRepository {
                 user.email,
                 user.id as string
               );
-              res.status(200).send({ accessToken: token , user: {name: user.fullName, email: user.email, _id: user.id, apiKey: user.apiKey }});
+              res.status(200).send({ accessToken: token , user: {name: user.fullName, email: user.email, _id: user.id, profile: user.profile }});
             } else {
               throw new Error("Email or password invalid!");
             }
@@ -148,10 +164,12 @@ export class UserController extends UserMongoDbRepository {
     }
   }
 
-  @Delete(":id")
-  @Middleware(authMiddleware)
+  @Delete("disbale/:id")
+  @Middleware([userAuthMiddleware, authMiddleware])
   private async delete(req: Request, res: Response) {
-    await this.deleteOne({ _id: req.params.id });
-    res.status(200).json({ message: "The User was deleted Successfully!" });
+    const user = new User(req.body);
+    await this.disableUser(req.params.id, user);
+    res.status(200).json({ message: "The User was removed successfully!" });
   }
 }
+ 

@@ -18,9 +18,8 @@ const userSchema = new mongoose.Schema(
         /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     },
     phone: { type: Number, required: true },
-    cpfCnpj: { type: Number, required: true, unique: true },
+    cpf: { type: Number, required: true, unique: true },
     password: { type: String, required: true },
-    apiKey: { type: String },
     address: new mongoose.Schema({
       street: { type: String },
       neighborhood: { type: String },

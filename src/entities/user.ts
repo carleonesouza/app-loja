@@ -6,9 +6,8 @@ export interface IUser {
   fullName: string;
   email: string;
   phone: number;
-  cpfCnpj: string;
+  cpf: string;
   password?: string;
-  apiKey?: string;
   address?: Address;
   profile?: Profile;
   status: boolean;

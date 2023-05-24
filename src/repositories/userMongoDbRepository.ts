@@ -3,20 +3,24 @@ import { DbMongooseRepository } from "@src/repositories/dbRepository";
 import { User } from "@src/models/user";
 import logger from "@src/logger";
 import { validatePassword } from "@src/middlewares/validate";
+import { Error } from "mongoose";
+import { Profile } from "@src/models/profile";
 
 export class UserMongoDbRepository
   extends DbMongooseRepository<User>
-  implements UserRepository
-{
+  implements UserRepository {
   private userModel = User;
+  private profileModel = Profile;
 
   constructor(userModel = User) {
     super(userModel);
   }
-  findAllusers(): Promise<User[]> {
+
+  findAllusers(apiKey: string): Promise<User[]> {
     try {
       return this.userModel
-        .find()
+        .find({ apiKey: apiKey })
+        .select('-password')
         .exec();
     } catch (error) {
       logger.error(error);
@@ -28,17 +32,20 @@ export class UserMongoDbRepository
     return "";
   }
 
-  public async login(email: string, password: string): Promise<unknown> {
-    try {
+  public async login(email: string, password: string): Promise<boolean> {
+    try {     
       return this.userModel
         .findOne({ email: email })
+        .populate({
+          path: 'profile',
+          options: { strictPopulate: false },
+        })
         .exec()
         .then((user) => {
+          if (!user?.status) {
+            throw new Error("User disabled!");
+          }
           return validatePassword(password, user?.password as string);
-        })
-        .catch((error) => {
-          logger.error(error);
-          this.handleError(error);
         });
     } catch (error) {
       logger.error(error);
@@ -46,18 +53,33 @@ export class UserMongoDbRepository
     }
   }
 
+  async createAdminProfile(profile: string): Promise<Profile> {
+    const adminProfile = await this.profileModel.findOne({ role: profile }).exec();
+    if (adminProfile) {
+      return adminProfile as Profile;
+    } else {
+      const admin = new Profile({ role: profile, status: true })
+      const result = this.profileModel.create(admin);
+      return result;
+    }
+  }
+
   public async register(data: User): Promise<User> {
+
     try {
+      const localP = (await this.createAdminProfile("Admin")) as Profile;
       const user = new User({
         fullName: data.fullName,
         email: data.email,
         phone: data.phone,
-        cpfCnpj: data.cpfCnpj,
+        cpf: data.cpf,
         password: data.password,
-        apiKey: data.apiKey,
+        profile: localP,
+        status: true
       });
       const newUser = await user.save();
       return newUser as User;
+
     } catch (error) {
       logger.error(error);
       this.handleError(error);
@@ -74,7 +96,6 @@ export class UserMongoDbRepository
             phone: user.phone,
             address: user.address,
             profile: user.profile,
-            status: user.status,
           },
         }
       );
@@ -87,9 +108,34 @@ export class UserMongoDbRepository
 
   public async findUserById(userId: string): Promise<User> {
     try {
-      const data = await this.userModel.findOne({ _id: userId })
-      .exec();
-      return data as User;
+      const data = await this.userModel
+        .findOne({ _id: userId })
+        .populate({
+          path: 'profile',
+          options: { strictPopulate: false },
+        })
+        .select('-password')
+        .exec();
+      const _id = data?._id;
+      const { fullName, email, phone, cpf, address, profile, status } = data as User;
+      return new User({ _id, fullName, email, phone, cpf, address, profile, status });
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+  }
+
+  public async updateUserPwd(userId: string, user: User): Promise<unknown> {
+    try {
+      const data = await this.userModel.updateOne(
+        { _id: userId },
+        {
+          $set: {
+            password: user.password,
+          },
+        }
+      );
+      return data;
     } catch (error) {
       logger.error(error);
       this.handleError(error);
@@ -98,9 +144,32 @@ export class UserMongoDbRepository
 
   public async findUserByEmail(email: string): Promise<User> {
     try {
-      const data = await this.userModel.findOne({ email: email })
-      .exec();
+      const data = await this.userModel
+        .findOne({ email: email })
+        .populate({
+          path: 'profile',
+          options: { strictPopulate: false },
+        })
+        .exec();
       return data as User;
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+  }
+
+  async disableUser(userId: string, user: User): Promise<unknown> {
+    try {
+      const data = await this.userModel.updateOne(
+        { _id: userId },
+        {
+          $set: {
+            address: user.address,
+            status: user.status,
+          },
+        }
+      );
+      return data;
     } catch (error) {
       logger.error(error);
       this.handleError(error);
