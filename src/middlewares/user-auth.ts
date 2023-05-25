@@ -1,4 +1,4 @@
-import { User } from "@src/models/user";
+import { Store } from "@src/models/store";
 import { Request, Response, NextFunction } from "express";
 
 export async function userAuthMiddleware(
@@ -6,16 +6,11 @@ export async function userAuthMiddleware(
     res: Response,
     next: NextFunction
 ): Promise<void> {
-
+// adminUser.profile?.role.toLowerCase().localeCompare(String("Admin").toLocaleLowerCase()) === 1
     try {
-        const userModel = User;
-        const adminUser = await userModel.findOne({ _id: req?.params?.id }).populate({
-            path: 'profile',
-            options: { strictPopulate: false },
-          })
-          .select('-password').exec();
-        if (!adminUser?.apiKey ||
-            adminUser.profile?.role.toLowerCase().localeCompare(String("Admin").toLocaleLowerCase()) === 1) {
+        const storeModel = Store;
+        const adminUser = await storeModel.findOne({ _id: req?.params?.id }).exec();
+        if (!adminUser?.apiKey) {
                 throw new Error('Unauthorized!');
         }
         next();

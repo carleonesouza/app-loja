@@ -5,12 +5,14 @@ import logger from "@src/logger";
 import { validatePassword } from "@src/middlewares/validate";
 import { Error } from "mongoose";
 import { Profile } from "@src/models/profile";
+import { Store } from "@src/models/store";
 
 export class UserMongoDbRepository
   extends DbMongooseRepository<User>
   implements UserRepository {
   private userModel = User;
   private profileModel = Profile;
+  private storeModel = Store;
 
   constructor(userModel = User) {
     super(userModel);
@@ -33,7 +35,7 @@ export class UserMongoDbRepository
   }
 
   public async login(email: string, password: string): Promise<boolean> {
-    try {     
+    try {
       return this.userModel
         .findOne({ email: email })
         .populate({
@@ -64,8 +66,7 @@ export class UserMongoDbRepository
     }
   }
 
-  public async register(data: User): Promise<User> {
-
+  public async register(data: User, storeId: string): Promise<User> {
     try {
       const localP = (await this.createAdminProfile("Admin")) as Profile;
       const user = new User({
@@ -78,8 +79,24 @@ export class UserMongoDbRepository
         status: true
       });
       const newUser = await user.save();
+      if (newUser) {
+        this.addUserToStore(newUser, storeId);
+      }
       return newUser as User;
 
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+  }
+
+
+  private async addUserToStore(user: User, id: string) {
+    try {
+      const query = { _id: id };
+      const update = { $push: { users: user } };
+      const userAdd = await this.storeModel.findByIdAndUpdate(query, update)
+      return userAdd;
     } catch (error) {
       logger.error(error);
       this.handleError(error);
@@ -119,6 +136,20 @@ export class UserMongoDbRepository
       const _id = data?._id;
       const { fullName, email, phone, cpf, address, profile, status } = data as User;
       return new User({ _id, fullName, email, phone, cpf, address, profile, status });
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+  }
+
+
+  public async createUserStore(id: string, user: User){
+    try {
+      const data = await this.userModel.create(user);
+      if(data){
+          this.addUserToStore(data, id);
+      }
+      return data;
     } catch (error) {
       logger.error(error);
       this.handleError(error);

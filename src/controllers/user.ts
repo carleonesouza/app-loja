@@ -14,6 +14,8 @@ import { authMiddleware } from "@src/middlewares/auth";
 import { apiKey } from "@src/middlewares/api-key";
 import AuthService from "@src/services/auth";
 import { userAuthMiddleware } from "@src/middlewares/user-auth";
+import { Assinatura } from "@src/models/assinatura";
+import { Store } from "@src/models/store";
 
 @Controller("v1/api/users")
 export class UserController extends UserMongoDbRepository {
@@ -92,16 +94,18 @@ export class UserController extends UserMongoDbRepository {
     }
   }
 
-  @Post("register")
+  @Post("register/:id")
   @Middleware(apiKey)
   public async registerUser(req: Request, res: Response): Promise<void> {
+    const signatureModel = Assinatura;
+    const storeModel = Store;
     try {
       const existUser =  await this.findUserByEmail(req.body.email);
       if (existUser) {
         res.status(409).send({ message: "User Already exists!" });
       } else {
-        const user = new User(req.body);
-        this.register(user)
+        const user = new User(req.body.user);
+        this.register(user, req.params.id)
           .then((result) => {
             const token = AuthService.generateToken(
               result.email,
@@ -109,12 +113,18 @@ export class UserController extends UserMongoDbRepository {
             );
             res.status(201).send({ accessToken: token , user: {name: result.fullName, email: result.email, _id: result.id, profile: result.profile }});
           })
-          .catch((error) => {
+          .catch((error) => {          
+            signatureModel.findOneAndDelete({email: req.body.store.owner});
+            storeModel.findOneAndDelete({owner: req.body.store.owner});
+
             res.status(500).send(error);
             logger.error(error);
           });
       }
     } catch (error) {
+      signatureModel.findOneAndDelete({email: req.body.store.owner});
+      storeModel.findOneAndDelete({owner: req.body.store.owner});
+      
       res.status(500).send(error);
       logger.error(error);
     }

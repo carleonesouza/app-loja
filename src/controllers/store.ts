@@ -67,7 +67,7 @@ export class StoreController extends StoreMongoDbRepository{
     }
 
     @Put("users/:id")
-    @Middleware([userAuthMiddleware, authMiddleware])
+    @Middleware(apiKey)
     private async addUserStore(req: Request, res: Response) {
       try {
         const user = new User(req.body);
@@ -88,8 +88,8 @@ export class StoreController extends StoreMongoDbRepository{
         if (existStore) {
           res.status(409).send({ message: "Store Already exists!" });
         } else {
-          const user = new Store(req.body);
-          this.createStore(user)
+          const store = new Store(req.body);
+          this.createStore(store)
             .then((result) => {              
               res.status(201).send(result);
             })
