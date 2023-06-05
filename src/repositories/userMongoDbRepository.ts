@@ -91,7 +91,7 @@ export class UserMongoDbRepository
   }
 
 
-  private async addUserToStore(user: User, id: string) {
+  public async addUserToStore(user: User, id: string) {
     try {
       const query = { _id: id };
       const update = { $push: { users: user } };
@@ -100,6 +100,21 @@ export class UserMongoDbRepository
     } catch (error) {
       logger.error(error);
       this.handleError(error);
+    }
+  }
+
+  public async addUserToStoreByUserId(user: User, id: string) {
+    try {
+    
+      const store = await this.storeModel.findOne({users: id}).populate({
+        path: 'users',
+        options: { strictPopulate: false },
+      }).exec()
+      store?.users.push(user)
+      return await store?.save();      
+     
+    } catch (error) {    
+       throw new Error(" "+error)
     }
   }
 

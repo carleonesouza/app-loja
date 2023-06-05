@@ -10,18 +10,21 @@ import logger from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth";
 import { userAuthMiddleware } from "@src/middlewares/user-auth";
 import { Product } from "@src/models/product";
+import { Store } from "@src/models/store";
 import { ProductMongoDbRepository } from "@src/repositories/productMongoDbRepository";
 import { Request, Response } from "express";
 
 @Controller("v1/api/products")
 export class ProductController extends ProductMongoDbRepository {
   
-  @Get()
+  @Get('all/:id')
   @Middleware([authMiddleware])
   public async getProduct(req: Request, res: Response): Promise<void> {
     try {
-      const products = await this.findAllProducts();
-      res.status(200).send(products);
+      const storeModel = Store;
+      const store = await storeModel.findOne({users: req.params.id}).populate({path: 'produtos', options: { strictPopulate: false }}).limit(Number(req.params.size)).exec();
+      const recievdStore = new Store(store);      
+      res.status(200).send(recievdStore.produtos);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -65,8 +68,8 @@ export class ProductController extends ProductMongoDbRepository {
         res.status(409).send({ message: "Product Already exists!" });
       } else {
         const product = new Product(req.body);
-
         await this.create(product);
+        this.addProductToStore(product, req.params.id)
         res.status(201).send({
           message: "The product has been created successfully!",
           product,

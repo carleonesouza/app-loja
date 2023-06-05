@@ -2,11 +2,14 @@ import { ProductRepository } from "@src/repositories/productRepository";
 import { DbMongooseRepository } from "@src/repositories/dbRepository";
 import { Product } from "@src/models/product";
 import logger from "@src/logger";
+import { Store } from "@src/models/store";
 
 export class ProductMongoDbRepository
   extends DbMongooseRepository<Product>
   implements ProductRepository {
   private productModel = Product;
+  private storeModel = Store;
+
 
   constructor(productModel = Product) {
     super(productModel);
@@ -57,6 +60,21 @@ export class ProductMongoDbRepository
     } catch (error) {
       logger.error(error);
       this.handleError(error);
+    }
+  }
+
+  public async addProductToStore(product: Product, id: string) {
+    try {
+    
+      const store = await this.storeModel.findOne({users: id}).populate({
+        path: 'produtos',
+        options: { strictPopulate: false },
+      }).exec()
+      store?.produtos.push(product)
+      return await store?.save();        
+     
+    } catch (error) {    
+       throw new Error(" "+error)
     }
   }
 

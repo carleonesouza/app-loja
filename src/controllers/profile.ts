@@ -58,21 +58,22 @@ export class ProfileController extends ProfileMongoDbRepository {
     }
   }
 
-  @Post()
-    public async createProfile(req: Request, res: Response): Promise<void> {
+  @Post(':id')
+  public async createProfile(req: Request, res: Response): Promise<void> {
     try {
-      const existProfile = this.findProfileByName(req.body.name);
-      if (await existProfile) {
-        res.status(409).send({ message: "Profile Already exists!" });
-      } else {
-        const profile = new Profile(req.body);
 
-        await this.create(profile);
-        res.status(201).send({
-          message: "The profile has been created successfully!",
-          profile,
-        });
-      }
+      this.findUserInStoreById(req.params.id).then(async (user) => {
+        if (user) {
+          const profile = new Profile(req.body);
+          await this.create(profile);
+          await this.addProfileToStore(profile, req.params.id)
+          res.status(201).send({
+            message: "The profile has been created successfully!",
+            profile,
+          });
+        }
+      })
+
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);

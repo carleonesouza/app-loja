@@ -18,6 +18,7 @@ export function authMiddleware(
     const idToken = req.headers.authorization.split("Bearer ")[1];
     const claims = AuthService.decodeToken(idToken as string);
     req.context = { userId: claims.sub };
+
     next();
   } catch (err) {
     if (err instanceof Error) {

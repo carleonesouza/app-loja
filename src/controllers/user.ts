@@ -20,12 +20,14 @@ import { Store } from "@src/models/store";
 @Controller("v1/api/users")
 export class UserController extends UserMongoDbRepository {
   
-  @Get('group/:apiKey')
+  @Get('group/:id')
   @Middleware([authMiddleware])
   public async getUsers(req: Request, res: Response): Promise<void> {
     try {
-      const users = await this.findAllusers(req.params.apiKey);
-      res.status(200).send(users);
+      const storeModel = Store;
+      const store = await storeModel.findOne({users: req.params.id}).populate({path: 'users', options: { strictPopulate: false }}).limit(5).exec();
+      const recievdStore = new Store(store);  
+      res.status(200).send(recievdStore.users);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -86,6 +88,7 @@ export class UserController extends UserMongoDbRepository {
       } else {
         const user = new User(req.body);
         await this.create(user);
+        await this.addUserToStoreByUserId(user, req.params.id)
         res.status(201).send({ message: "The User has been created successfully!", user });
       }
     } catch (error) {

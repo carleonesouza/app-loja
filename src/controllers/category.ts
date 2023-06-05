@@ -7,6 +7,7 @@ import {
   Middleware,
 } from "@overnightjs/core";
 import { Category } from "@src/models/category";
+import { Store } from "@src/models/store";
 import { Request, Response } from "express";
 import { CategoryMongoDbRepository } from "../repositories/categoryMongoDbRepository";
 import logger from "@src/logger";
@@ -16,12 +17,14 @@ import { userAuthMiddleware } from "@src/middlewares/user-auth";
 @Controller("v1/api/categories")
 export class CategoryController extends CategoryMongoDbRepository {
 
-  @Get()
+  @Get('all/:id')
   @Middleware([authMiddleware])
   public async getCategory(req: Request, res: Response): Promise<void> {
     try {
-      const category = await this.find({});
-      res.status(200).send(category);
+      const storeModel = Store;
+      const store = await storeModel.findOne({users: req.params.id}).populate({path: 'categorias', options: { strictPopulate: false }}).limit(5).exec();
+      const recievdStore = new Store(store);      
+      res.status(200).send(recievdStore.categorias);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
@@ -67,7 +70,11 @@ export class CategoryController extends CategoryMongoDbRepository {
       } else {
         const category = new Category(req.body);
 
-        await this.create(category);
+        const categoryStore = await this.create(category);  
+        if (categoryStore) {
+          this.addCategoryToStore(category, req.params.id);
+        }
+    
         res.status(201).send({
           message: "The category has been created successfully!",
           category,

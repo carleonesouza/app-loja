@@ -10,9 +10,11 @@ const storeSchema = new mongoose.Schema(
   {
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true}],
     produtos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true }],
+    categorias: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true }],
+    profiles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Profile", required: true }],
     name: { type: String, required: true},
-    cnpj: { type: String, unique: true},
-    apiKey: { type: String},
+    cnpj: { type: String},
+    apiKey: { type: String, required: true, unique: true},
     phone: { type: String },
     owner:{
         type: String,

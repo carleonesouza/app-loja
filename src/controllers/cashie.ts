@@ -72,13 +72,18 @@ export class CashieController extends CashieMongoDbRepository {
     }
   }
 
-  @Post()
+  @Post(':id')
   @Middleware([authMiddleware])
   public async createCashie(req: Request, res: Response): Promise<void> {
     try {
-      const cashie = new Cashie(req.body);
-      await this.create(cashie);
-      res.status(201).send(cashie);
+        this.findUserInStoreById(req.params.id).then(async (user) => {
+          if(user){
+            const cashie = new Cashie(req.body);
+            await this.create(cashie);
+            res.status(201).send(cashie);
+          }
+        })
+   
     } catch (error) {
       res.status(500).send({ message: error });
       logger.error(error);

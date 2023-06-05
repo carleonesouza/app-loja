@@ -18,5 +18,10 @@ const schema = new mongoose.Schema({
   volume: { type: String, required: true },
   quantity: { type: Number, required: false },
   status: { type: Boolean, required: false },
-});
+},
+{
+  timestamps: true,
+  strict: false
+}
+);
 export const Product = mongoose.model<Product>("Product", schema);

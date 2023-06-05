@@ -2,12 +2,14 @@ import { DbMongooseRepository } from "@src/repositories/dbRepository";
 import logger from "@src/logger";
 import { Order } from "@src/models/order";
 import { OrderRepository } from "@src/repositories/orderRepository";
+import { Store } from "@src/models/store";
 
 export class OrderMongoDbRepository
   extends DbMongooseRepository<Order>
   implements OrderRepository
 {
   private orderModel = Order;
+  private storeModel = Store;
 
   constructor(orderModel = Order) {
     super(orderModel);
@@ -36,6 +38,20 @@ export class OrderMongoDbRepository
       this.handleError(error);
     }
   }
+
+  public async findUserInStoreById(id: string): Promise<unknown>{
+    try {    
+      const store = await this.storeModel.findOne({users: id}).populate({
+        path: 'users',
+        options: { strictPopulate: false },
+      }).exec()    
+      return store;        
+    } catch (error) {
+      logger.error(error);
+      this.handleError(error);
+    }
+  }
+
 
   public async findOrderById(orderId: string): Promise<Order> {
     try {

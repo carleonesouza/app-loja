@@ -10,6 +10,7 @@ import { Request, Response } from "express";
 import logger from "@src/logger";
 import { OrderMongoDbRepository } from "@src/repositories/orderMongoDbRepository";
 import { Order } from "@src/models/order";
+import { Store } from "@src/models/store";
 import { authMiddleware } from "@src/middlewares/auth";
 import { userAuthMiddleware } from "@src/middlewares/user-auth";
 import ProdctService from "@src/services/product";
@@ -54,19 +55,24 @@ export class OrderController extends OrderMongoDbRepository {
     }
   }
 
-  @Post()
+  @Post(':id')
   @Middleware([authMiddleware])
   public async createOrder(req: Request, res: Response): Promise<void> {
     try {
       const servicepdt = new ProdctService();
       const order = new Order(req.body);
-      if (order.produtos.length > 0) {
-        order.produtos.forEach(async (pdt) => {
-          await servicepdt.updateQuantity(pdt);
-        })
-      }
-      await this.create(order);
-      res.status(201).send(order);
+      await this.findUserInStoreById(req.params.id).then(async (user) => {
+        if (user) {
+          if (order.produtos.length > 0) {
+            order.produtos.forEach(async (pdt) => {
+              await servicepdt.updateQuantity(pdt);
+            })
+          }
+          await this.create(order);
+          res.status(201).send(order);         
+        }
+      })
+
     } catch (error) {
       res.status(500).send(error);
       logger.error(error);
