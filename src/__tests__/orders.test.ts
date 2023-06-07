@@ -101,7 +101,7 @@ describe("GET /order/:id", () => {
                 }
             )
         };
-        await controller.getgetOrderById(request as Request, response as Response);
+        await controller.getOrderById(request as Request, response as Response);
         expect(responseObject).toEqual({           
                     "_id": "646245e265376a28e90fab29",
                     "produtos": [
