@@ -1,6 +1,7 @@
 export default {
-  DB_URL:"mongodb://localhost:27017",
-  DATABASE:"mongodb://127.0.0.1:27017/app-loja",
+  DB_URL:"mongodb://localhost:27017/apploja",
+  DATABASE:
+    "mongodb+srv://carleone:PE24ca25@storeapp.evklx.gcp.mongodb.net/?retryWrites=true&w=majority",
   MAX_LOGIN_ATTEMPTS: 5,
   LOCK_TIME: 1 * 60 * 60 * 1000,
   SALT_WORK_FACTOR: 10,
