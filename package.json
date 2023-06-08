@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Controle de Caixa API para gestão financaira de pequenos negócios",
   "main": "dist/src/index.js",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
     "dev": "ts-node-dev --poll src/index.ts",
     "start": "npm run build && node ./dist/src/index.js",
